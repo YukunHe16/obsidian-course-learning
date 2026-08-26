@@ -2,6 +2,8 @@
 
 A reusable, local-first course-learning system maintained by Codex and browsed in Obsidian.
 
+**第一次使用？** 把 [GETTING_STARTED_PROMPT.md](GETTING_STARTED_PROMPT.md) 中的完整提示词复制给 Codex，它会引导安装和初始化。
+
 It turns lecture PDFs and other course sources into:
 
 - source-grounded lecture notes and concept pages;
