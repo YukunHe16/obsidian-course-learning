@@ -1,5 +1,7 @@
 # Codex + Obsidian Course Learning
 
+项目导航见 [INDEX.md](INDEX.md)。
+
 A reusable, local-first course-learning system maintained by Codex and browsed in Obsidian.
 
 **第一次使用？** 把 [GETTING_STARTED_PROMPT.md](GETTING_STARTED_PROMPT.md) 中的完整提示词复制给 Codex。它会检查并从官方来源安装 Obsidian，再通过 Computer Use 完成 Vault 注册和界面验证。
@@ -19,11 +21,12 @@ The repository contains only the reusable framework. It does **not** contain cou
 ```text
 <semester>/                  # Codex project; not an Obsidian vault
 ├── AGENTS.md
+├── Index.md                 # 学期级稳定入口
 ├── semester.md
-├── Overview/                # independent Obsidian vault
+├── Overview/                # independent Obsidian vault; has Index.md
 └── Courses/
-    ├── COURSE101/           # independent Obsidian vault
-    └── COURSE202/           # independent Obsidian vault
+    ├── COURSE101/           # independent Obsidian vault; has Index.md
+    └── COURSE202/           # independent Obsidian vault; has Index.md
 ```
 
 Course vaults are authoritative. Overview stores only regenerable summaries. Vaults are siblings, never nested.
@@ -96,6 +99,7 @@ Use $course-learning to initialize CS425 in my FA26 semester.
 ```
 
 Open `<semester>/Overview` and each `<semester>/Courses/<COURSE_ID>` folder as separate Obsidian vaults.
+每个学期 project、Overview Vault 和课程 Vault 都必须有根级 `Index.md`；`Home.md` 展示当前状态，`Index.md` 负责长期稳定导航。
 
 ## Daily Use
 

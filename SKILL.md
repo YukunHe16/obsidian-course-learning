@@ -35,6 +35,7 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 - Course vaults own lecture, concept, question, and review state. Overview owns only regenerated summaries and cross-course session records.
 - Namespace stable identifiers with `course_id`, for example `CS425/asynchrony`.
 - Use Obsidian Properties, Wikilinks, Bases, Graph, Backlinks, Templates, and File Recovery. Do not require community plugins.
+- Require a root `Index.md` in the semester project, Overview vault, and every course vault. `Home.md` shows current state; `Index.md` provides durable navigation. Keep both Chinese-primary with precise English technical terms and citation labels.
 - Do not claim that a vault, Base, or Graph works based only on generated files. When UI setup or opening pages is in scope, use Computer Use to inspect the live Obsidian state. If Computer Use is unavailable, report the UI portion as incomplete.
 - Do not create nested vaults or symlink course content into Overview.
 - Respect the course AI policy. Explain concepts and create original practice, but do not generate prohibited submit-ready homework, exam, or programming-assignment answers.

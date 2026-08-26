@@ -14,9 +14,10 @@ from typing import Any
 
 
 LINK_RE = re.compile(r"\[\[([^\]#|]+)")
-REQUIRED_ROOT = ["AGENTS.md", "semester.md", "Overview/Home.md", "Overview/views/Semester.base", "Courses"]
+REQUIRED_ROOT = ["AGENTS.md", "Index.md", "semester.md", "Overview/Index.md", "Overview/Home.md", "Overview/views/Semester.base", "Courses"]
 REQUIRED_COURSE = [
     "Course.md",
+    "Index.md",
     "Home.md",
     "raw/manifest.md",
     "wiki/index.md",

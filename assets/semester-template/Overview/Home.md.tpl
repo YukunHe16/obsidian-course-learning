@@ -6,6 +6,8 @@ generated_at:
 
 # {{TERM}} 学习总览
 
+完整导航：[[Index|学期总览索引]]
+
 > [!info] 使用方式
 > 下方课程摘要由各自独立的 course vault 生成。通过 `obsidian_uri` 打开课程，或对 Codex 说：`使用 $course-learning 开始跨课程复习。`
 

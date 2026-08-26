@@ -6,8 +6,10 @@ term: {{TERM}}
 
 # {{COURSE_ID}} 学习主页
 
+完整导航：[[Index|课程 Wiki 总索引]]
+
 > [!info] 课程配置
-> [[Course|{{COURSE_ID}} - {{COURSE_TITLE}}]] · [[wiki/index|Knowledge index]] · [[raw/manifest|Source manifest]] · [[wiki/log|Operation log]]
+> [[Course|{{COURSE_ID}} - {{COURSE_TITLE}}]] · [[wiki/index|知识索引]] · [[raw/manifest|来源清单]] · [[wiki/log|维护日志]]
 
 ## 今日到期 (Due now)
 
