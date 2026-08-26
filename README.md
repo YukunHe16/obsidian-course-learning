@@ -2,7 +2,7 @@
 
 A reusable, local-first course-learning system maintained by Codex and browsed in Obsidian.
 
-**第一次使用？** 把 [GETTING_STARTED_PROMPT.md](GETTING_STARTED_PROMPT.md) 中的完整提示词复制给 Codex，它会引导安装和初始化。
+**第一次使用？** 把 [GETTING_STARTED_PROMPT.md](GETTING_STARTED_PROMPT.md) 中的完整提示词复制给 Codex。它会检查并从官方来源安装 Obsidian，再通过 Computer Use 完成 Vault 注册和界面验证。
 
 It turns lecture PDFs and other course sources into:
 
@@ -36,6 +36,19 @@ Course vaults are authoritative. Overview stores only regenerable summaries. Vau
 - Poppler (`pdfinfo`, `pdftotext`, `pdftoppm`) for full PDF ingestion
 
 No OpenAI API key, backend, database, or community Obsidian plugin is required.
+
+Automated Obsidian setup currently targets Codex desktop on macOS with Computer Use. If Computer Use is unavailable, file initialization can still run, but the UI setup is not considered complete.
+
+## Install and Configure Obsidian
+
+The full getting-started prompt explicitly authorizes Codex to download the current macOS app from the [official Obsidian download page](https://obsidian.md/download) when it is missing. Codex then uses Computer Use to:
+
+- launch Obsidian and register each sibling folder with **Open folder as vault**;
+- enable the Bases, Backlinks, Graph view, Properties view, Templates, and File recovery core plugins;
+- open and visibly verify `Home.md`, Base views, and Graph view;
+- leave the most useful Home or requested study page open.
+
+CLI commands and `obsidian://` links may assist navigation, but they do not replace the live UI check. Codex must pause for any EULA, administrator credential, login, security-sensitive permission, or unexpected authorization screen. See [`references/obsidian-setup.md`](references/obsidian-setup.md).
 
 ## Install the Skill
 

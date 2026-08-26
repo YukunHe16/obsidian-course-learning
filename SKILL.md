@@ -16,8 +16,9 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 
 ## Route the request
 
-- **Initialize a semester:** Read [vault-schema.md](references/vault-schema.md), then run `scripts/init_semester.py`.
+- **Initialize a semester:** Read [vault-schema.md](references/vault-schema.md) and [obsidian-setup.md](references/obsidian-setup.md), then run `scripts/init_semester.py` and complete the Obsidian UI setup.
 - **Initialize a course:** Read [course-schema.md](references/course-schema.md) and [vault-schema.md](references/vault-schema.md), then run `scripts/init_course.py`.
+- **Install, open, or configure Obsidian:** Read [obsidian-setup.md](references/obsidian-setup.md). Use Computer Use for app installation and every GUI-only action; CLI or Obsidian URI may supplement but not replace visual verification.
 - **Ingest new material:** Read [ingest-workflow.md](references/ingest-workflow.md). For PDFs, also use the available PDF-specific skill and inspect every page visually as well as textually.
 - **Teach or answer:** Read [teaching-workflow.md](references/teaching-workflow.md).
 - **Quiz or review:** Read [assessment-rules.md](references/assessment-rules.md).
@@ -34,6 +35,7 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 - Course vaults own lecture, concept, question, and review state. Overview owns only regenerated summaries and cross-course session records.
 - Namespace stable identifiers with `course_id`, for example `CS425/asynchrony`.
 - Use Obsidian Properties, Wikilinks, Bases, Graph, Backlinks, Templates, and File Recovery. Do not require community plugins.
+- Do not claim that a vault, Base, or Graph works based only on generated files. When UI setup or opening pages is in scope, use Computer Use to inspect the live Obsidian state. If Computer Use is unavailable, report the UI portion as incomplete.
 - Do not create nested vaults or symlink course content into Overview.
 - Respect the course AI policy. Explain concepts and create original practice, but do not generate prohibited submit-ready homework, exam, or programming-assignment answers.
 - For multi-source analysis, subagents may inspect independent sources read-only. The primary agent alone performs canonical writes.
