@@ -138,3 +138,8 @@ The validator checks required structure, source hashes referenced by lecture not
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Related project
+
+For programme research, application materials, deadlines, and a private admissions
+tracker, see [Codex + Obsidian Graduate Admissions](https://github.com/YukunHe16/codex-obsidian-graduate-admissions).
