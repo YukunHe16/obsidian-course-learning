@@ -1,0 +1,82 @@
+filters:
+  and:
+    - file.ext == "md"
+    - note.type == "course-summary"
+properties:
+  due_count:
+    displayName: 到期
+  weak_count:
+    displayName: 薄弱
+  pending_count:
+    displayName: 待审核
+  average_mastery:
+    displayName: 平均掌握度
+  next_exam:
+    displayName: 下次考试
+  last_ingested:
+    displayName: 最近摄取
+  last_studied:
+    displayName: 最近学习
+  obsidian_uri:
+    displayName: 打开课程
+views:
+  - type: table
+    name: 课程总览
+    order:
+      - file.name
+      - status
+      - due_count
+      - weak_count
+      - pending_count
+      - average_mastery
+      - next_exam
+      - obsidian_uri
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: 需要关注
+    filters:
+      or:
+        - note.due_count > 0
+        - note.weak_count > 0
+        - note.pending_count > 0
+    order:
+      - file.name
+      - due_count
+      - weak_count
+      - pending_count
+      - next_exam
+    sort:
+      - property: due_count
+        direction: DESC
+      - property: weak_count
+        direction: DESC
+  - type: table
+    name: 近期考试
+    filters:
+      and:
+        - note.next_exam.isType("date")
+        - note.next_exam >= today()
+        - note.next_exam <= today() + "14d"
+    order:
+      - file.name
+      - next_exam
+      - average_mastery
+      - due_count
+    sort:
+      - property: next_exam
+        direction: ASC
+  - type: table
+    name: 复习负载
+    order:
+      - file.name
+      - due_count
+      - weak_count
+      - average_mastery
+      - last_studied
+    sort:
+      - property: due_count
+        direction: DESC
+      - property: average_mastery
+        direction: ASC

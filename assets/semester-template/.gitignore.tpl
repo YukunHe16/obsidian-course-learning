@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.pyc
+**/.obsidian/workspace*.json
+**/.trash/
+Courses/*/inbox/*
+Courses/*/raw/**/*.pdf
+Courses/*/raw/**/*.ppt
+Courses/*/raw/**/*.pptx
+Courses/*/raw/**/*.doc
+Courses/*/raw/**/*.docx
+Courses/*/raw/**/*.mp3
+Courses/*/raw/**/*.mp4
+Courses/*/raw/**/*.mov

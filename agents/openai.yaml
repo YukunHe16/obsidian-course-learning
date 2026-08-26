@@ -1,0 +1,6 @@
+interface:
+  display_name: "Course Learning"
+  short_description: "Build and maintain reusable course learning vaults"
+  default_prompt: "Use $course-learning to initialize, ingest, teach, quiz, review, or validate a course vault."
+policy:
+  allow_implicit_invocation: true

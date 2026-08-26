@@ -1,0 +1,8 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "assets",
+  "newFileFolderPath": "sessions",
+  "newFileLocation": "folder",
+  "showUnsupportedFiles": true,
+  "useMarkdownLinks": false
+}

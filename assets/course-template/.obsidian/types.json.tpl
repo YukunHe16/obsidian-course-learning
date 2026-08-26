@@ -1,0 +1,31 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "average_mastery": "number",
+    "concepts": "multitext",
+    "date": "date",
+    "due_count": "number",
+    "exam_dates": "multitext",
+    "generated_at": "datetime",
+    "last_ingested": "date",
+    "last_reviewed": "date",
+    "last_score": "number",
+    "last_studied": "date",
+    "lecture_date": "date",
+    "lecture_days": "multitext",
+    "lecture_no": "number",
+    "mastery": "number",
+    "misconceptions": "multitext",
+    "next_actions": "multitext",
+    "next_exam": "date",
+    "next_review": "date",
+    "pending_count": "number",
+    "review_stage": "number",
+    "review_weight": "number",
+    "scheduled_draft_ingest": "checkbox",
+    "score": "number",
+    "source_lectures": "multitext",
+    "source_types": "multitext",
+    "weak_count": "number"
+  }
+}

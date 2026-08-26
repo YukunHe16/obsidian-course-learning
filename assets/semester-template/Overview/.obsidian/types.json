@@ -1,0 +1,15 @@
+{
+  "types": {
+    "average_mastery": "number",
+    "date": "date",
+    "due_count": "number",
+    "generated_at": "datetime",
+    "last_ingested": "date",
+    "last_score": "number",
+    "last_studied": "date",
+    "next_exam": "date",
+    "pending_count": "number",
+    "score": "number",
+    "weak_count": "number"
+  }
+}
