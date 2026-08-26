@@ -4,7 +4,15 @@ filters:
     - note.type == "course-summary"
 properties:
   due_count:
-    displayName: 到期
+    displayName: 到期复习
+  upcoming_deadline_count:
+    displayName: 未来 14 天截止
+  overdue_deadline_count:
+    displayName: 已逾期截止
+  next_deadline:
+    displayName: 最近截止日期
+  next_deadline_title:
+    displayName: 最近截止事项
   weak_count:
     displayName: 薄弱
   pending_count:
@@ -26,6 +34,10 @@ views:
       - file.name
       - status
       - due_count
+      - upcoming_deadline_count
+      - overdue_deadline_count
+      - next_deadline
+      - next_deadline_title
       - weak_count
       - pending_count
       - average_mastery
@@ -39,19 +51,46 @@ views:
     filters:
       or:
         - note.due_count > 0
+        - note.overdue_deadline_count > 0
+        - and:
+            - note.next_deadline.isType("date")
+            - note.next_deadline <= today() + "7d"
         - note.weak_count > 0
         - note.pending_count > 0
     order:
       - file.name
       - due_count
+      - upcoming_deadline_count
+      - overdue_deadline_count
+      - next_deadline
+      - next_deadline_title
       - weak_count
       - pending_count
       - next_exam
     sort:
       - property: due_count
         direction: DESC
+      - property: overdue_deadline_count
+        direction: DESC
       - property: weak_count
         direction: DESC
+  - type: table
+    name: 近期课程截止
+    filters:
+      and:
+        - note.next_deadline.isType("date")
+        - note.next_deadline >= today()
+        - note.next_deadline <= today() + "14d"
+    order:
+      - file.name
+      - next_deadline
+      - next_deadline_title
+      - upcoming_deadline_count
+      - overdue_deadline_count
+      - obsidian_uri
+    sort:
+      - property: next_deadline
+        direction: ASC
   - type: table
     name: 近期考试
     filters:

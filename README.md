@@ -10,6 +10,7 @@ It turns lecture PDFs and other course sources into:
 
 - source-grounded lecture notes and concept pages;
 - Obsidian Bases, Graph, Backlinks, and dashboards;
+- source-grounded homework, quiz, lab, project, and exam deadline tracking;
 - Socratic quizzes and 1/3/7/14-day spaced review;
 - a semester Overview across independent course vaults;
 - optional Codex Scheduled workflows for intake, review, and weekly checks.
@@ -108,6 +109,7 @@ Use $course-learning to ingest the new PDF in this course inbox.
 Use $course-learning to teach Lecture 3 in Chinese with English technical terms.
 Use $course-learning to quiz me one question at a time.
 Use $course-learning to review everything due today.
+Use $course-learning to show all course deadlines in the next 14 days.
 Use $course-learning to validate the semester workspace.
 ```
 
@@ -130,7 +132,7 @@ python3 ~/.agents/skills/course-learning/scripts/validate_vault.py \
   --semester-root ~/Documents/Study/FA26
 ```
 
-The validator checks required structure, source hashes referenced by lecture notes, concept IDs and mastery ranges, Wikilinks, and Overview/course consistency.
+The validator checks required structure, source hashes referenced by lecture notes, concept IDs and mastery ranges, deadline IDs/dates/evidence/timezones, Wikilinks, and Overview/course consistency.
 
 ## Privacy and Academic Integrity
 

@@ -5,9 +5,13 @@ title: {{COURSE_TITLE}}
 term: {{TERM}}
 status: active
 due_count: 0
+upcoming_deadline_count: 0
+overdue_deadline_count: 0
 weak_count: 0
 pending_count: 0
 average_mastery: 0
+next_deadline:
+next_deadline_title:
 next_exam:
 last_ingested:
 last_studied:

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import re
@@ -29,10 +30,27 @@ REQUIRED_COURSE = [
     "wiki/concepts",
     "wiki/course-policies",
     "wiki/pending",
+    "learning/deadlines",
     "learning/questions",
     "learning/sessions",
     "templates",
 ]
+DEADLINE_STATUSES = {"pending", "completed", "missed", "waived", "cancelled"}
+DEADLINE_VERIFICATION_STATUSES = {"candidate", "verified", "stale", "conflict"}
+DEADLINE_DATE_STATUSES = {"exact", "recurring", "unpublished", "section-dependent"}
+DEADLINE_KINDS = {
+    "homework",
+    "assignment",
+    "quiz",
+    "exam",
+    "lab",
+    "discussion",
+    "project",
+    "reading",
+    "administrative",
+    "recurring",
+    "other",
+}
 
 
 def scalar(value: str) -> Any:
@@ -88,6 +106,123 @@ def add(issues: list[dict[str, str]], level: str, code: str, path: Path, message
     issues.append({"level": level, "code": code, "path": str(path), "message": message})
 
 
+def valid_iso_date(value: Any) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        dt.date.fromisoformat(value[:10])
+    except ValueError:
+        return False
+    return True
+
+
+def validate_deadlines(
+    course_root: Path,
+    course_id: str,
+    issues: list[dict[str, str]],
+    deadline_ids: dict[str, Path],
+) -> None:
+    deadline_root = course_root / "learning" / "deadlines"
+    if not deadline_root.is_dir():
+        return
+    for note in deadline_root.glob("*.md"):
+        data = frontmatter(note)
+        required = {
+            "type",
+            "course",
+            "deadline_id",
+            "title",
+            "deadline_kind",
+            "date_status",
+            "status",
+            "verification_status",
+        }
+        missing = sorted(required - data.keys())
+        if missing:
+            add(issues, "error", "deadline-schema", note, f"Missing properties: {', '.join(missing)}")
+            continue
+        if data.get("type") != "deadline" or data.get("course") != course_id:
+            add(issues, "error", "deadline-schema", note, "Deadline type/course does not match the vault")
+
+        deadline_id = data.get("deadline_id")
+        if not isinstance(deadline_id, str) or not deadline_id.startswith(course_id + "/deadline/"):
+            add(issues, "error", "deadline-id", note, "deadline_id must use the course/deadline namespace")
+        elif deadline_id in deadline_ids:
+            add(issues, "error", "duplicate-deadline-id", note, f"Also defined in {deadline_ids[deadline_id]}")
+        else:
+            deadline_ids[deadline_id] = note
+
+        if data.get("deadline_kind") not in DEADLINE_KINDS:
+            add(issues, "error", "deadline-kind", note, f"Invalid deadline_kind: {data.get('deadline_kind')!r}")
+        if data.get("date_status") not in DEADLINE_DATE_STATUSES:
+            add(issues, "error", "deadline-date-status", note, f"Invalid date_status: {data.get('date_status')!r}")
+        if data.get("status") not in DEADLINE_STATUSES:
+            add(issues, "error", "deadline-status", note, f"Invalid status: {data.get('status')!r}")
+        if data.get("verification_status") not in DEADLINE_VERIFICATION_STATUSES:
+            add(
+                issues,
+                "error",
+                "deadline-verification-status",
+                note,
+                f"Invalid verification_status: {data.get('verification_status')!r}",
+            )
+
+        due_date = data.get("due_date")
+        if data.get("date_status") == "exact" and not valid_iso_date(due_date):
+            add(issues, "error", "deadline-date", note, "An exact deadline requires an ISO due_date")
+        elif due_date is not None and not valid_iso_date(due_date):
+            add(issues, "error", "deadline-date", note, "due_date must be an ISO date or empty")
+
+        release_date = data.get("release_date")
+        if release_date is not None and not valid_iso_date(release_date):
+            add(issues, "error", "deadline-date", note, "release_date must be an ISO date or empty")
+
+        due_time = data.get("due_time")
+        if due_time is not None:
+            if not isinstance(due_time, str) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", due_time):
+                add(issues, "error", "deadline-time", note, "due_time must use 24-hour HH:MM or be empty")
+            if not valid_iso_date(due_date):
+                add(issues, "error", "deadline-time", note, "due_time requires due_date")
+            if not isinstance(data.get("timezone"), str) or not data["timezone"].strip():
+                add(issues, "error", "deadline-timezone", note, "due_time requires an explicit timezone")
+
+        source_path = data.get("source_path")
+        official_url = data.get("official_url")
+        if source_path is not None:
+            if not isinstance(source_path, str) or not source_path.strip():
+                add(issues, "error", "deadline-source", note, "source_path must be a non-empty relative path")
+            else:
+                source = (course_root / source_path).resolve()
+                try:
+                    source.relative_to(course_root.resolve())
+                except ValueError:
+                    add(issues, "error", "deadline-source", note, "source_path must stay inside the course vault")
+                else:
+                    if not source.is_file():
+                        add(issues, "error", "deadline-source", note, f"Source file does not exist: {source_path}")
+        if official_url is not None and (
+            not isinstance(official_url, str) or not re.match(r"^https?://", official_url)
+        ):
+            add(issues, "error", "deadline-source", note, "official_url must be HTTP(S) or empty")
+
+        if data.get("verification_status") == "verified":
+            missing_evidence: list[str] = []
+            if not source_path and not official_url:
+                missing_evidence.append("source_path or official_url")
+            if not isinstance(data.get("source_locator"), str) or not data["source_locator"].strip():
+                missing_evidence.append("source_locator")
+            if not valid_iso_date(data.get("verified_at")):
+                missing_evidence.append("verified_at")
+            if missing_evidence:
+                add(
+                    issues,
+                    "error",
+                    "deadline-evidence",
+                    note,
+                    f"Verified deadline needs: {', '.join(missing_evidence)}",
+                )
+
+
 def resolve_links(vault: Path, issues: list[dict[str, str]]) -> None:
     notes = list(vault.rglob("*.md"))
     by_stem: dict[str, list[Path]] = defaultdict(list)
@@ -112,7 +247,12 @@ def resolve_links(vault: Path, issues: list[dict[str, str]]) -> None:
                 add(issues, "warning", "ambiguous-link", note, f"Ambiguous Wikilink: {target}")
 
 
-def validate_course(course_root: Path, issues: list[dict[str, str]], concept_ids: dict[str, Path]) -> str | None:
+def validate_course(
+    course_root: Path,
+    issues: list[dict[str, str]],
+    concept_ids: dict[str, Path],
+    deadline_ids: dict[str, Path],
+) -> str | None:
     for relative in REQUIRED_COURSE:
         path = course_root / relative
         if not path.exists():
@@ -125,6 +265,8 @@ def validate_course(course_root: Path, issues: list[dict[str, str]], concept_ids
         return None
     if course_id != course_root.name:
         add(issues, "error", "course-profile", course_root / "Course.md", "course_id must match directory name")
+
+    validate_deadlines(course_root, course_id, issues, deadline_ids)
 
     for note in (course_root / "wiki" / "concepts").glob("*.md"):
         data = frontmatter(note)
@@ -182,11 +324,12 @@ def main() -> int:
             add(issues, "error", "missing-root-item", path, "Required semester item is missing")
 
     concept_ids: dict[str, Path] = {}
+    deadline_ids: dict[str, Path] = {}
     course_ids: set[str] = set()
     courses_dir = root / "Courses"
     if courses_dir.is_dir():
         for course_root in sorted(path for path in courses_dir.iterdir() if path.is_dir()):
-            course_id = validate_course(course_root, issues, concept_ids)
+            course_id = validate_course(course_root, issues, concept_ids, deadline_ids)
             if course_id:
                 course_ids.add(course_id)
 

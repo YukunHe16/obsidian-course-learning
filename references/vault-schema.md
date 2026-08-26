@@ -38,6 +38,7 @@ wiki/concepts/
 wiki/course-policies/
 wiki/pending/
 learning/questions/
+learning/deadlines/
 learning/sessions/
 views/Course.base
 templates/
@@ -76,8 +77,10 @@ Course views filter canonical course notes:
 - Weak: `type == "concept"` and `mastery <= 2`.
 - Pending: draft lectures or pending proposals.
 - Recent sessions: study sessions in the last 14 days.
+- Deadlines: today, next 14 days, pending verification, overdue, and all course milestones.
 
 Semester views filter `type == "course-summary"` and expose course status, due/weak/pending counts, exam dates, and deep links.
+Derived summaries additionally expose `upcoming_deadline_count`, `overdue_deadline_count`, `next_deadline`, and `next_deadline_title`; they never copy deadline prose from a course Vault.
 
 ## Validation
 

@@ -19,6 +19,12 @@
 
 Wiki 正文以中文为主；English 用于专业术语、proper nouns、官方 source titles、citation labels 和 slide/page markers。
 
+## Deadline Tracking
+
+- 每门课程把 homework、quiz、lab、project、exam 与 administrative milestones 保存在 `learning/deadlines/`。
+- 明确区分 exact、recurring、unpublished 与 section-dependent；不从 date-only 来源推断 clock time。
+- Course Base 展示今日、未来 14 天、待核验、已逾期与全部截止日期；Overview 只保存可重建的数量和最近一项。
+
 ## 相关项目
 
 - [Codex + Obsidian Graduate Admissions](https://github.com/YukunHe16/codex-obsidian-graduate-admissions)

@@ -23,6 +23,10 @@ generated_at:
 
 ![[views/Semester.base#近期考试]]
 
+## 未来 14 天课程截止
+
+![[views/Semester.base#近期课程截止]]
+
 ## 复习负载
 
 ![[views/Semester.base#复习负载]]

@@ -141,6 +141,7 @@ def main() -> int:
         course_root / "wiki" / "course-policies",
         course_root / "wiki" / "pending",
         course_root / "learning" / "questions",
+        course_root / "learning" / "deadlines",
         course_root / "learning" / "sessions",
         course_root / "views",
         course_root / "templates",

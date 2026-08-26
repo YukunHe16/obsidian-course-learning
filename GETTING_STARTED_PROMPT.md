@@ -12,7 +12,7 @@
 - 创建一个 semester-level Codex project；
 - 每门课使用独立 Obsidian Vault，另有独立 Overview Vault；
 - 后续能把 lecture PDFs 整理成中文为主、English technical terms、English citations 的 Wiki；
-- 支持 Socratic quiz、1/3/7/14-day spaced review、Obsidian Bases/Graph，以及可选 Codex Scheduled。
+- 支持 source-grounded deadline tracking、Socratic quiz、1/3/7/14-day spaced review、Obsidian Bases/Graph，以及可选 Codex Scheduled。
 
 请按下面流程执行：
 
@@ -43,14 +43,15 @@
 9. 用一个没有真实课程内容的测试课程验证：
    - 初始化成功；
    - 重复执行不会覆盖已有文件；
-   - Obsidian Base 可查询；
+   - Obsidian Base 可查询，并能显示今日、未来 14 天、待核验与已逾期的课程截止日期；
    - Graph 可以显示 Wiki links；
-   - Computer Use 可以在 Overview 与课程 Vault 之间切换，并实际打开 `Home.md`、Base 和 Graph view。
+   - Computer Use 可以在 Overview 与课程 Vault 之间切换，并实际打开 `Home.md`、Deadline Base view 和 Graph view。
 10. 完成后告诉我：创建了哪些路径、如何打开 Obsidian、如何添加下一门课，以及下面这些日常指令怎么用：
     - `使用 $course-learning 整理 inbox 中的新课件`
     - `使用 $course-learning 讲解 Lecture 1`
     - `使用 $course-learning 逐题考我`
     - `使用 $course-learning 复习今天到期的内容`
+    - `使用 $course-learning 查看未来 14 天的作业、quiz、lab、project 和 exam deadlines`
     - `使用 $course-learning 检查整个 semester`
 11. 不要把我的 raw course PDFs、assignment files、grades、账号信息或 personal study data 提交到这个 framework repository。
 12. 最后询问我是否创建三项 project-scoped Codex Scheduled：daily intake、every-two-day review、weekly checkpoint。只有我确认后才创建，并使用当前账户支持的模型；reasoning effort 不高于 high。

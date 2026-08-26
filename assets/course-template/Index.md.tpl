@@ -24,6 +24,7 @@ language: "{{LANGUAGE}}"
 
 ## 学习区
 
+- `learning/deadlines/`：有来源、核验状态和适用范围的课程截止日期
 - `learning/questions/`：候选题目
 - `learning/sessions/`：复习与考察记录
 - `raw/manifest.md`：不可修改的 source manifest

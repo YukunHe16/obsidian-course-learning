@@ -12,6 +12,7 @@
 - For PDFs, extract text and render every page. Inspect diagrams, tables, staged-reveal slides, questions without answers, and pages whose meaning is mostly visual.
 - Preserve slide/page numbering in citations.
 - Separate durable knowledge from time-sensitive logistics and academic-integrity policy.
+- Extract assignment, quiz, lab, project, exam, survey, registration, and accommodation deadlines. Preserve whether each date is exact, recurring, unpublished, or section-dependent, and record the applicable student track.
 - Identify definitions, assumptions, algorithms, failure modes, tradeoffs, examples, counterexamples, and links to existing concepts.
 - Apply the course language contract while writing: Chinese-primary prose by default, precise English technical terms, and English citation labels/source markers.
 
@@ -22,9 +23,10 @@
 3. Create a lecture note with `status: draft`.
 4. Create new concept drafts or a proposal under `wiki/pending/` for changes to existing canonical concepts.
 5. Create original practice questions with private answer rubrics in `learning/questions/`.
-6. Update `wiki/index.md` and append one operation entry to `wiki/log.md`.
-7. Set initial concept review to the next day; the scheduled review may pick it up later if it becomes overdue.
-8. Refresh the derived Overview summary without copying concept prose.
+6. Create new deadline records in `learning/deadlines/` only when an official source is explicit; otherwise create candidate records or a proposal without guessing missing date/time fields.
+7. Update `wiki/index.md` and append one operation entry to `wiki/log.md`.
+8. Set initial concept review to the next day; the scheduled review may pick it up later if it becomes overdue.
+9. Refresh the derived Overview summary without copying concept or deadline prose.
 
 ## Approval boundary
 
