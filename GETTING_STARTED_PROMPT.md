@@ -38,6 +38,7 @@
 7. 使用 `scripts/init_course.py` 创建课程。`Overview/` 与 `Courses/<COURSE_ID>/` 必须是 sibling Vaults；禁止 nested Vaults 和 symlinks。
 8. 阅读 `references/obsidian-setup.md`，启动 Obsidian 并完成设置：
    - 用 **Open folder as vault** 分别注册 Overview 和每门课程；CLI 没有注册命令，必要时用界面能力，或按 `references/agent-compatibility.md` 的 `obsidian.json` 兜底方案，或让我手动点一次；
+   - `obsidian` CLI 默认关闭：先运行 `obsidian version`，若提示未启用，就在 **Settings > General > Advanced** 打开一次（需要界面操作或让我手动开）；
    - 用 `obsidian vaults verbose` 确认注册结果；
    - 启用并验证 Bases、Graph view、Backlinks、Properties view、Templates 和 File recovery（`obsidian vault=<VAULT> plugins:enabled filter=core`）；
    - 不启用 community plugins、Obsidian Sync、Publish 或账号功能；

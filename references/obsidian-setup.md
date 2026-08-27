@@ -16,11 +16,13 @@ Read this workflow when initializing a semester, installing Obsidian, registerin
 3. If Obsidian is absent and the user asked to initialize the system, install the current macOS release from an official source only: the download page at <https://obsidian.md/download> (Computer Use, or `curl` on the release it links to), or `brew install --cask obsidian` when the user prefers a package manager. Never use an advertisement, mirror, or unofficial download page.
 4. Downloading and installing the official Obsidian app is part of an explicit setup request. Still pause at the moment of any EULA, administrator credential, login, security-sensitive permission, or other unexpected authorization screen. Never type the user's password or enable Obsidian Sync without a separate request.
 5. Launch Obsidian once (`open -a Obsidian`, or through Computer Use) and confirm the app window is live before continuing. This also registers the `obsidian://` URI handler and makes the `obsidian` CLI usable, since the CLI talks to the running app.
+6. Confirm CLI access with `obsidian version`. The CLI is disabled by default; enabling it at **Settings > General > Advanced** is a one-time GUI action.
 
 ## Division of work
 
 - Use shell scripts for deterministic file creation, source hashing, and validation.
 - Use the `obsidian` CLI (Obsidian 1.13+) for vault inspection, core-plugin state, opening files, querying Bases, opening Graph view, and screenshots. Its output is checkable, so prefer it over blind clicking under any agent.
+- The CLI is opt-in. Check it with `obsidian version`; if it reports that the command line interface is not enabled, turn it on once at **Settings > General > Advanced** with a GUI capability or by asking the user.
 - Use Computer Use or an equivalent GUI capability for first launch, **Open folder as vault**, Settings screens, and anything the CLI cannot reach.
 - `obsidian://` deep links may speed up navigation after registration, but they do not prove the UI is usable. Re-inspect Obsidian after using one.
 - Re-read the current app state after UI actions. Do not reuse stale element identifiers or assume that a click succeeded.

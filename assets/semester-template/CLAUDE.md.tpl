@@ -11,7 +11,7 @@ The semester contract lives in `AGENTS.md` in this directory. It is shared by ev
 - Invoke the Skill as `/course-learning`, or let the skill description trigger it. Confirm it is installed with `/skills`; the expected location is `~/.claude/skills/course-learning/`.
 - This root is an agent project, not an Obsidian vault. `Overview/` and every `Courses/<COURSE_ID>/` are independent sibling vaults.
 - `CLAUDE.md` and `AGENTS.md` must stay consistent. Edit `AGENTS.md`; keep this file thin.
-- Obsidian work uses the `obsidian` CLI against the running app (`obsidian vaults verbose`, `plugins:enabled filter=core`, `open path=Home.md`, `base:query`, `command id=graph:open`, `dev:screenshot path=<file>.png`). Read the screenshot back before reporting that a page, Base, or Graph is fine. If no visual check is possible, report the UI portion as unverified instead of assuming it.
+- Obsidian work uses the `obsidian` CLI against the running app. It is opt-in: if `obsidian version` reports the command line interface is not enabled, turn it on once at **Settings > General > Advanced**. Useful commands (`obsidian vaults verbose`, `plugins:enabled filter=core`, `open path=Home.md`, `base:query`, `command id=graph:open`, `dev:screenshot path=<file>.png`). Read the screenshot back before reporting that a page, Base, or Graph is fine. If no visual check is possible, report the UI portion as unverified instead of assuming it.
 - Unattended or headless runs (`claude -p` from cron or launchd) keep the same boundary as any other scheduled run: drafts and derived summaries may be written; promoting drafts, changing course policy, and overwriting human-authored notes need confirmation.
 
 ## Daily entry points

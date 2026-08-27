@@ -65,7 +65,7 @@ The full getting-started prompt explicitly authorizes the agent to install the c
 - opens and visibly verifies `Home.md`, Base views, and Graph view;
 - leaves the most useful Home or requested study page open.
 
-Obsidian 1.13 ships an official `obsidian` CLI that drives the running app (`obsidian vaults verbose`, `plugin:enable`, `open`, `base:query`, `command id=graph:open`, `dev:screenshot`). It makes most of this deterministic under either agent, but it does not replace looking at the result: a Base that answers a query still has to be seen rendering. The agent must pause for any EULA, administrator credential, login, security-sensitive permission, or unexpected authorization screen. See [`references/obsidian-setup.md`](references/obsidian-setup.md).
+Obsidian 1.13 ships an official `obsidian` CLI that drives the running app (`obsidian vaults verbose`, `plugin:enable`, `open`, `base:query`, `command id=graph:open`, `dev:screenshot`). It is disabled by default — turn it on once at **Settings → General → Advanced**. It makes most of this deterministic under either agent, but it does not replace looking at the result: a Base that answers a query still has to be seen rendering. The agent must pause for any EULA, administrator credential, login, security-sensitive permission, or unexpected authorization screen. See [`references/obsidian-setup.md`](references/obsidian-setup.md).
 
 ## Install the Skill
 

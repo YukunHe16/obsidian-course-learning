@@ -28,7 +28,12 @@ Keep the contract in `AGENTS.md`. When it changes, do not copy prose into `CLAUD
 
 ## Obsidian automation (both agents)
 
-Obsidian 1.13 ships an official `obsidian` CLI (`/usr/local/bin/obsidian` on macOS, symlinked into `Obsidian.app`). It talks to the **running** app, so launch Obsidian first (`open -a Obsidian`). Prefer it over ad-hoc GUI clicking under either agent, because it is deterministic and its output is checkable:
+Obsidian 1.13 ships an official `obsidian` CLI (`/usr/local/bin/obsidian` on macOS, symlinked into `Obsidian.app`). Two prerequisites:
+
+- **It is opt-in.** If a command answers `Command line interface is not enabled. Please turn it on in Settings > General > Advanced.`, or `obsidian` is not on `PATH`, that toggle is off. Enabling it is a one-time GUI action — do it with a GUI capability or ask the user; do not treat the CLI as unavailable without checking.
+- **It talks to the running app.** Launch Obsidian first (`open -a Obsidian`) and confirm `obsidian version` answers.
+
+Once both hold, prefer the CLI over ad-hoc GUI clicking under either agent, because it is deterministic and its output is checkable:
 
 ```bash
 obsidian version
