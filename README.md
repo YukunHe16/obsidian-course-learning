@@ -93,19 +93,23 @@ For a single project instead of your whole account, clone into `<project>/.claud
 
 ## Create a Semester
 
+Point `SKILL` at wherever you installed it, then the commands below are identical for both agents:
+
 ```bash
-python3 ~/.claude/skills/course-learning/scripts/init_semester.py \
+SKILL=~/.claude/skills/course-learning      # Codex: SKILL=~/.agents/skills/course-learning
+
+python3 $SKILL/scripts/init_semester.py \
   --root ~/Documents/Study/FA26 \
   --term FA26 \
   --timezone America/Chicago
 ```
 
-Use `~/.agents/skills/course-learning/...` instead if you installed the Skill for Codex. The command is idempotent: existing files are skipped, not overwritten. Running it again on an older workspace adds the missing `CLAUDE.md` without touching anything else.
+The command is idempotent: existing files are skipped, not overwritten. Running it again on a semester created before Claude Code support adds the missing `CLAUDE.md` and touches nothing else.
 
 ## Add a Course
 
 ```bash
-python3 ~/.claude/skills/course-learning/scripts/init_course.py \
+python3 $SKILL/scripts/init_course.py \
   --semester-root ~/Documents/Study/FA26 \
   --course-id CS425 \
   --title "Distributed Systems" \
@@ -113,10 +117,15 @@ python3 ~/.claude/skills/course-learning/scripts/init_course.py \
   --source-types lecture-slides syllabus textbook
 ```
 
-Or simply ask the agent:
+Or simply ask the agent. In Claude Code:
 
 ```text
 /course-learning initialize CS425 in my FA26 semester.
+```
+
+In Codex:
+
+```text
 Use $course-learning to initialize CS425 in my FA26 semester.
 ```
 
@@ -125,16 +134,29 @@ Open `<semester>/Overview` and each `<semester>/Courses/<COURSE_ID>` folder as s
 
 ## Daily Use
 
-Prefix with `/course-learning` in Claude Code or `Use $course-learning to` in Codex:
+In Claude Code, from the semester root:
 
 ```text
-ingest the new PDF in this course inbox.
-teach Lecture 3 in Chinese with English technical terms.
-quiz me one question at a time.
-review everything due today.
-show all course deadlines in the next 14 days.
-validate the semester workspace.
+/course-learning ingest the new PDF in this course inbox
+/course-learning teach Lecture 3 in Chinese with English technical terms
+/course-learning quiz me one question at a time
+/course-learning review everything due today
+/course-learning show all course deadlines in the next 14 days
+/course-learning validate the semester workspace
 ```
+
+In Codex:
+
+```text
+Use $course-learning to ingest the new PDF in this course inbox.
+Use $course-learning to teach Lecture 3 in Chinese with English technical terms.
+Use $course-learning to quiz me one question at a time.
+Use $course-learning to review everything due today.
+Use $course-learning to show all course deadlines in the next 14 days.
+Use $course-learning to validate the semester workspace.
+```
+
+中文同样可用，例如 `/course-learning 讲解 Lecture 3` 或 `使用 $course-learning 逐题考我`。
 
 The default writing contract is Chinese-primary prose, precise English technical terms, and English source citations. Edit `Course.md` to change it per course.
 
@@ -151,7 +173,7 @@ Codex uses project-scoped Scheduled tasks. Claude Code uses its scheduled tasks 
 ## Validate
 
 ```bash
-python3 ~/.claude/skills/course-learning/scripts/validate_vault.py \
+python3 $SKILL/scripts/validate_vault.py \
   --semester-root ~/Documents/Study/FA26
 ```
 
