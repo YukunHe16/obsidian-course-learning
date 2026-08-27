@@ -9,7 +9,7 @@ generated_at:
 完整导航：[[Index|学期总览索引]]
 
 > [!info] 使用方式
-> 下方课程摘要由各自独立的 course vault 生成。通过 `obsidian_uri` 打开课程，或对 Codex 说：`使用 $course-learning 开始跨课程复习。`
+> 下方课程摘要由各自独立的 course vault 生成。通过 `obsidian_uri` 打开课程，或让 agent 开始跨课程复习：Codex `使用 $course-learning 开始跨课程复习`，Claude Code `/course-learning 开始跨课程复习`。
 
 ## 课程
 
@@ -31,7 +31,7 @@ generated_at:
 
 ![[views/Semester.base#复习负载]]
 
-## Scheduled 节奏
+## Scheduled / 定时节奏
 
 - 新资料扫描：每天 18:00。
 - 自适应跨课程复习：每两天 20:00。

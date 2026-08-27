@@ -2,16 +2,20 @@
 
 ## Semester root
 
-The semester root is a Codex project, not an Obsidian vault:
+The semester root is an agent project (Codex or Claude Code), not an Obsidian vault:
 
 ```text
 <semester>/
-|-- AGENTS.md
+|-- AGENTS.md              # shared agent contract; Codex reads it directly
+|-- CLAUDE.md              # Claude Code entry point; defers to AGENTS.md
+|-- Index.md
 |-- semester.md
 |-- Overview/              # independent Obsidian vault
 `-- Courses/
     `-- <COURSE_ID>/       # independent Obsidian vault
 ```
+
+`AGENTS.md` owns the contract and `CLAUDE.md` stays thin. Both are written by `init_semester.py`; see [agent-compatibility.md](agent-compatibility.md).
 
 Never add a `.obsidian` directory to the semester root. Never nest a course under `Overview` and never symlink course files into it.
 

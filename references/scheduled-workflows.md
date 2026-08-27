@@ -2,6 +2,19 @@
 
 All schedules use the semester timezone. Scheduled runs use mixed autonomy: drafts and reproducible summaries may be written unattended; canonical knowledge promotion requires confirmation.
 
+## How to schedule
+
+The three workflows below are agent-neutral prompts scoped to the semester root. Only the trigger differs; see [agent-compatibility.md](agent-compatibility.md).
+
+- **Codex:** project-scoped Scheduled tasks on the semester root.
+- **Claude Code:** a scheduled-task feature when the build exposes one, otherwise `cron` or `launchd` running headless mode from the semester root:
+
+  ```bash
+  cd <semester-root> && claude -p "Use the course-learning skill: <workflow prompt>"
+  ```
+
+Create them only after the user confirms. A headless or unattended run has no one to answer a question, so it must end at the approval boundary rather than guessing.
+
 ## Material intake
 
 - Run against the semester project each day at 18:00.

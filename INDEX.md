@@ -1,12 +1,13 @@
 # Course Learning 项目索引
 
-本仓库提供可复用的 Codex Skill 与 Obsidian 多课程学习系统模板。
+本仓库提供可复用的 agent Skill（Codex 与 Claude Code 通用）与 Obsidian 多课程学习系统模板。
 
 ## 快速入口
 
 - [README](README.md)：架构、安装和使用说明
 - [一键初始化提示词](GETTING_STARTED_PROMPT.md)
 - [Course Learning Skill](SKILL.md)
+- [Agent 兼容说明（Codex / Claude Code）](references/agent-compatibility.md)
 - [学期模板](assets/semester-template/)
 - [课程 Vault 模板](assets/course-template/)
 - [课程与 Vault schema](references/course-schema.md)
@@ -14,6 +15,7 @@
 - [教学流程](references/teaching-workflow.md)
 - [考察与复习规则](references/assessment-rules.md)
 - [Scheduled workflows](references/scheduled-workflows.md)
+- [Obsidian 安装与界面验证](references/obsidian-setup.md)
 
 ## 默认写作合同
 

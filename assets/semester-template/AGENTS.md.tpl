@@ -2,11 +2,13 @@
 
 ## Mission
 
-Maintain a source-grounded learning system across all courses in this semester. Use `$course-learning` for course initialization, ingestion, teaching, quizzes, spaced review, Overview rebuilds, and validation.
+Maintain a source-grounded learning system across all courses in this semester. Use the `course-learning` Skill (`$course-learning` in Codex, `/course-learning` in Claude Code) for course initialization, ingestion, teaching, quizzes, spaced review, Overview rebuilds, and validation.
+
+This file is the shared contract for every agent working in this semester. Codex reads it directly; Claude Code reaches it through `CLAUDE.md`. Change the rules here, not in a per-agent copy.
 
 ## Project boundaries
 
-- This root is a Codex project, not an Obsidian vault. Never create `.obsidian` here or directly under `Courses/`.
+- This root is an agent project, not an Obsidian vault. Never create `.obsidian` here or directly under `Courses/`.
 - `Overview/` and every `Courses/<COURSE_ID>/` are independent sibling Obsidian vaults. Never nest vaults or join them with symlinks.
 - A course vault owns lectures, concepts, questions, raw sources, and mastery state.
 - Overview contains only reproducible summaries and cross-course sessions. Use encoded `obsidian://open?path=...` links across vaults.
@@ -15,7 +17,7 @@ Maintain a source-grounded learning system across all courses in this semester. 
 
 - Raw files are immutable. Record SHA-256, size, source type, and ingest date.
 - Course claims cite the source file and page/section. Label external enrichment separately.
-- Scheduled may create drafts, candidate questions, manifests, logs, and derived summaries.
+- Scheduled or headless runs may create drafts, candidate questions, manifests, logs, and derived summaries.
 - Require confirmation before promoting drafts, changing course policy, or overwriting human-authored canonical notes.
 
 ## Learning behavior
@@ -27,4 +29,4 @@ Maintain a source-grounded learning system across all courses in this semester. 
 
 ## Verification
 
-Run the `$course-learning` validator after structural changes. Inspect every PDF page visually and textually. Stop unattended retry loops after one failure.
+Run the Skill's validator after structural changes. Inspect every PDF page visually and textually. Check Obsidian state through the live app — the `obsidian` CLI against the running app, plus a screenshot or Computer Use — before reporting that a vault, Base, or Graph is working. Stop unattended retry loops after one failure.

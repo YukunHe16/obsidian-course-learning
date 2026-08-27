@@ -15,7 +15,11 @@ from typing import Any
 
 
 LINK_RE = re.compile(r"\[\[([^\]#|]+)")
-REQUIRED_ROOT = ["AGENTS.md", "Index.md", "semester.md", "Overview/Index.md", "Overview/Home.md", "Overview/views/Semester.base", "Courses"]
+REQUIRED_ROOT = ["Index.md", "semester.md", "Overview/Index.md", "Overview/Home.md", "Overview/views/Semester.base", "Courses"]
+# The semester root carries one contract in two entry points: AGENTS.md for Codex, CLAUDE.md for
+# Claude Code. A workspace created before dual-agent support has only AGENTS.md, so a single file
+# is a warning rather than a blocking error.
+AGENT_CONTRACT_FILES = ["AGENTS.md", "CLAUDE.md"]
 REQUIRED_COURSE = [
     "Course.md",
     "Index.md",
@@ -322,6 +326,25 @@ def main() -> int:
         path = root / relative
         if not path.exists():
             add(issues, "error", "missing-root-item", path, "Required semester item is missing")
+
+    missing_contracts = [name for name in AGENT_CONTRACT_FILES if not (root / name).is_file()]
+    if len(missing_contracts) == len(AGENT_CONTRACT_FILES):
+        add(
+            issues,
+            "error",
+            "missing-agent-contract",
+            root / AGENT_CONTRACT_FILES[0],
+            f"The semester root needs {' and '.join(AGENT_CONTRACT_FILES)}",
+        )
+    else:
+        for name in missing_contracts:
+            add(
+                issues,
+                "warning",
+                "missing-agent-contract",
+                root / name,
+                f"{name} is missing; rerun init_semester.py to add it without touching existing files",
+            )
 
     concept_ids: dict[str, Path] = {}
     deadline_ids: dict[str, Path] = {}

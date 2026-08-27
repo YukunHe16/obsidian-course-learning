@@ -18,7 +18,8 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 
 - **Initialize a semester:** Read [vault-schema.md](references/vault-schema.md) and [obsidian-setup.md](references/obsidian-setup.md), then run `scripts/init_semester.py` and complete the Obsidian UI setup.
 - **Initialize a course:** Read [course-schema.md](references/course-schema.md) and [vault-schema.md](references/vault-schema.md), then run `scripts/init_course.py`.
-- **Install, open, or configure Obsidian:** Read [obsidian-setup.md](references/obsidian-setup.md). Use Computer Use for app installation and every GUI-only action; CLI or Obsidian URI may supplement but not replace visual verification.
+- **Install the Skill, adapt to Codex or Claude Code, or schedule a workflow:** Read [agent-compatibility.md](references/agent-compatibility.md). It is the only place where agent-specific behavior lives.
+- **Install, open, or configure Obsidian:** Read [obsidian-setup.md](references/obsidian-setup.md), and [agent-compatibility.md](references/agent-compatibility.md) for the automation mechanism this agent actually has. The `obsidian` CLI drives the running app deterministically; it does not by itself prove the UI is usable.
 - **Ingest new material:** Read [ingest-workflow.md](references/ingest-workflow.md). For PDFs, also use the available PDF-specific skill and inspect every page visually as well as textually.
 - **Teach or answer:** Read [teaching-workflow.md](references/teaching-workflow.md).
 - **Quiz or review:** Read [assessment-rules.md](references/assessment-rules.md).
@@ -36,8 +37,9 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 - Course vaults also own canonical deadline records under `learning/deadlines/`. Distinguish exact dates, recurring rules, unpublished dates, and section-dependent times; never infer a clock time from a date-only source. Overview may keep only derived counts and the next deadline.
 - Namespace stable identifiers with `course_id`, for example `CS425/asynchrony`.
 - Use Obsidian Properties, Wikilinks, Bases, Graph, Backlinks, Templates, and File Recovery. Do not require community plugins.
+- Keep the semester root's `AGENTS.md` and `CLAUDE.md` consistent. `AGENTS.md` holds the shared contract; `CLAUDE.md` defers to it and carries only Claude-Code-specific notes. Never let the two diverge.
 - Require a root `Index.md` in the semester project, Overview vault, and every course vault. `Home.md` shows current state; `Index.md` provides durable navigation. Keep both Chinese-primary with precise English technical terms and citation labels.
-- Do not claim that a vault, Base, or Graph works based only on generated files. When UI setup or opening pages is in scope, use Computer Use to inspect the live Obsidian state. If Computer Use is unavailable, report the UI portion as incomplete.
+- Do not claim that a vault, Base, or Graph works based only on generated files. When UI setup or opening pages is in scope, inspect the live Obsidian state with whatever the current agent actually has: Computer Use, a computer-use MCP server, or the `obsidian` CLI plus a screenshot read back as an image. If none is available, report the UI portion as incomplete.
 - Do not create nested vaults or symlink course content into Overview.
 - Respect the course AI policy. Explain concepts and create original practice, but do not generate prohibited submit-ready homework, exam, or programming-assignment answers.
 - Treat assignment PDFs, official course websites, and staff announcements as time-sensitive deadline sources. Preserve `verified_at`, source locator, applicable student track, submission platform, timezone, and late-policy caveats.

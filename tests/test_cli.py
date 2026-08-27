@@ -56,6 +56,8 @@ class IndexContractTests(unittest.TestCase):
         self.assertEqual(self.initialize_course().returncode, 0)
         self.assertTrue((self.root / "Index.md").is_file())
         self.assertTrue((self.root / "Overview" / "Index.md").is_file())
+        self.assertTrue((self.root / "AGENTS.md").is_file())
+        self.assertTrue((self.root / "CLAUDE.md").is_file())
         self.assertTrue((self.root / "Courses" / "TEST101" / "learning" / "deadlines").is_dir())
         self.assertTrue((self.root / "Courses" / "TEST101" / "templates" / "Deadline.md").is_file())
         self.assertEqual(course_index.read_text(encoding="utf-8"), "USER INDEX\n")
@@ -101,6 +103,32 @@ class IndexContractTests(unittest.TestCase):
         )
         result = self.run_cli(VALIDATE, "--semester-root", self.root)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_semester_root_carries_both_agent_contracts(self) -> None:
+        self.assertEqual(self.initialize_semester().returncode, 0)
+        claude_md = (self.root / "CLAUDE.md").read_text(encoding="utf-8")
+        self.assertIn("AGENTS.md", claude_md)
+        self.assertIn("/course-learning", claude_md)
+        self.assertIn("TEST27", claude_md)
+        self.assertNotIn("{{", claude_md)
+
+    def test_validator_accepts_a_workspace_with_only_one_agent_contract(self) -> None:
+        self.assertEqual(self.initialize_semester().returncode, 0)
+        self.assertEqual(self.initialize_course().returncode, 0)
+        (self.root / "CLAUDE.md").unlink()
+        result = self.run_cli(VALIDATE, "--semester-root", self.root)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("errors=0 warnings=1", result.stdout)
+        self.assertIn("WARNING missing-agent-contract", result.stdout)
+
+    def test_validator_rejects_a_workspace_without_any_agent_contract(self) -> None:
+        self.assertEqual(self.initialize_semester().returncode, 0)
+        self.assertEqual(self.initialize_course().returncode, 0)
+        (self.root / "CLAUDE.md").unlink()
+        (self.root / "AGENTS.md").unlink()
+        result = self.run_cli(VALIDATE, "--semester-root", self.root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("ERROR missing-agent-contract", result.stdout)
 
     def test_validator_rejects_unsupported_or_malformed_deadline(self) -> None:
         self.assertEqual(self.initialize_semester().returncode, 0)

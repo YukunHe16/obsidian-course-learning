@@ -44,4 +44,4 @@ term: {{TERM}}
 - 打开全局 Graph 查看整门课的知识结构。
 - 打开概念的 local Graph 查看 lecture、prerequisite 与 misconception 关系。
 - 从 [[views/Course.base#全部截止日期|全部截止日期]] 检查作业、quiz、lab、exam 与 administrative milestones。
-- 对 Codex 说：`使用 $course-learning 复习这门课。`
+- 让 agent 复习这门课：Codex `使用 $course-learning 复习这门课`，Claude Code `/course-learning 复习这门课`。

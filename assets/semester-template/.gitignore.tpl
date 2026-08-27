@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 **/.obsidian/workspace*.json
 **/.trash/
+.claude/settings.local.json
+.codex/
 Courses/*/inbox/*
 Courses/*/raw/**/*.pdf
 Courses/*/raw/**/*.ppt

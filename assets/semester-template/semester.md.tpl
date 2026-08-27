@@ -19,10 +19,10 @@ review_intervals:
 
 # {{TERM}} Learning System
 
-This directory is the Codex semester project. Open `Overview/` or an individual directory under `Courses/` as an Obsidian vault.
+This directory is the agent semester project (Codex or Claude Code). Open `Overview/` or an individual directory under `Courses/` as an Obsidian vault.
 
 ## Default policy
 
 - Wiki prose follows `language`; the default is Chinese-primary prose with precise English technical terms and English citations.
 - Preserve raw sources and make durable claims traceable.
-- Scheduled uses mixed autonomy: derived state and drafts may update unattended; canonical promotion requires review.
+- Scheduled and headless runs use mixed autonomy: derived state and drafts may update unattended; canonical promotion requires review.
