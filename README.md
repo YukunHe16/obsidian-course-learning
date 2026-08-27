@@ -193,4 +193,5 @@ MIT. See [LICENSE](LICENSE).
 ## Related project
 
 For programme research, application materials, deadlines, and a private admissions
-tracker, see [Codex + Obsidian Graduate Admissions](https://github.com/YukunHe16/codex-obsidian-graduate-admissions).
+tracker, see [Obsidian Graduate Admissions](https://github.com/YukunHe16/obsidian-graduate-admissions),
+which supports the same two agents.

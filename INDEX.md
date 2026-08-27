@@ -29,4 +29,4 @@ Wiki 正文以中文为主；English 用于专业术语、proper nouns、官方 
 
 ## 相关项目
 
-- [Codex + Obsidian Graduate Admissions](https://github.com/YukunHe16/codex-obsidian-graduate-admissions)
+- [Obsidian Graduate Admissions](https://github.com/YukunHe16/obsidian-graduate-admissions)：同样支持 Codex 与 Claude Code
