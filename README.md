@@ -72,13 +72,13 @@ Obsidian 1.13 ships an official `obsidian` CLI that drives the running app (`obs
 ### Codex
 
 ```text
-Use $skill-installer to install https://github.com/YukunHe16/codex-obsidian-course-learning
+Use $skill-installer to install https://github.com/YukunHe16/obsidian-course-learning
 ```
 
 Manual alternative:
 
 ```bash
-git clone https://github.com/YukunHe16/codex-obsidian-course-learning.git ~/.agents/skills/course-learning
+git clone https://github.com/YukunHe16/obsidian-course-learning.git ~/.agents/skills/course-learning
 ```
 
 Restart Codex if the skill does not appear immediately.
@@ -86,7 +86,7 @@ Restart Codex if the skill does not appear immediately.
 ### Claude Code
 
 ```bash
-git clone https://github.com/YukunHe16/codex-obsidian-course-learning.git ~/.claude/skills/course-learning
+git clone https://github.com/YukunHe16/obsidian-course-learning.git ~/.claude/skills/course-learning
 ```
 
 For a single project instead of your whole account, clone into `<project>/.claude/skills/course-learning` — project skills are shared with anyone who works in that repository. Run `/skills` to confirm `course-learning` is listed.
