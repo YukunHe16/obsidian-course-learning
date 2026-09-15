@@ -1,39 +1,21 @@
-# Quiz, mastery, and spaced review
+# 主动自测与简短学习记录
 
-## Interaction
+Only begin teaching, quiz, or review when requested. Never schedule daily tests, recurring reviews, quotas, or future reminders.
 
-- Ask one question at a time.
-- Do not show the answer, rubric, key terms, or leading multiple-choice options before the learner commits.
-- Prefer short-answer generation, explanation, scenario analysis, comparison, derivation, and transfer over recognition-only questions.
-- After an answer, first diagnose the reasoning, then score, correct, and ask a targeted follow-up when useful.
+## Questions
 
-## Mastery scale
+Keep one question-set file per lecture and preserve existing question headings/IDs. Add questions with new IDs, never renumber old ones. Each question has a separate optional collapsed hint and a collapsed explanation with a link back to the exact lecture section. Do not show either before an answer unless the learner asks for help. Ask one question at a time; diagnose the reasoning, not only the conclusion.
 
-- `0`: unseen or no usable evidence.
-- `1`: recognizes the term but cannot explain it reliably.
-- `2`: explains the core idea with support.
-- `3`: applies it correctly to a new course-level scenario.
-- `4`: transfers it, compares alternatives, and reasons about changed assumptions.
+Use a worked example, a partly completed example, and independent transfer when it helps. Do not transform prohibited graded work into “practice”.
 
-Do not raise mastery solely because the learner says they understand.
+## Current progress
 
-## Review ladder
+learning/Progress.md is authoritative for the current resume_link and misconception checklist. Set resume_link and updated_at only after explicit learning interaction or a user-selected bookmark; opening a note, ingesting slides and navigating links are not evidence of learning.
 
-The intervals are 1, 3, 7, and 14 days.
+Use checklist entries under “待澄清问题”: an open checkbox means unresolved; a checked one means clarified. Each entry includes a stable course-namespaced ID, a concise misconception, a topic/question link and a link to the real session evidence. Later clarification adds a resolution evidence link before checking the item. Do not infer questions from old mastery=0.
 
-- Correct with sound reasoning: advance one review stage, capped at 4.
-- Partially correct: keep the stage and schedule the same interval again.
-- Incorrect, guessed, or unable to explain: reset to stage 0 and schedule in 1 day.
+## Sessions
 
-Write `last_reviewed`, `next_review`, `mastery`, and `review_stage` to the owning concept note only after learner evidence. Append a study-session note; never rewrite prior sessions.
+After an actual interaction, append one short session with type: study-session, course, date, mode, source_lecture, evidence_summary. Include concise answer reasoning, whether a hint was used, and the correction. No full transcript, numeric score, scheduled next review or invented responses. Progress owns current state; sessions preserve historical evidence and are not rewritten.
 
-## Cross-course selection
-
-Select no more than three courses per session. Prioritize in order:
-
-1. an exam within 14 days;
-2. overdue concepts;
-3. mastery of 2 or below;
-4. a course underrepresented in recent sessions.
-
-Within three days of an exam, that course may dominate but should still include at least one older retrieval item when time permits. If nothing is due, report the next due date instead of inventing busywork.
+Legacy mastery, score, review_stage and next_review remain readable but optional. Do not update them in the default lightweight workflow or use them to generate weak labels, averages or study tasks.

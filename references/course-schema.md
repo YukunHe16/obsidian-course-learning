@@ -18,13 +18,27 @@ exam_dates:
   - 2026-10-08
 source_types:
   - lecture-slides
-review_weight: 1.0
+schema_version: 2
+content_review: agent-source-check
+learning_record: brief
 ai_policy: Course concepts and original practice only; no submit-ready HW or MP answers.
 scheduled_draft_ingest: true
 status: active
 ```
 
-`course_id` is uppercase and stable. Use it in every concept ID. `status` is `active` or `archived`. Dates use ISO `YYYY-MM-DD`. `review_weight` is a positive number; use `1.0` by default.
+`course_id` is uppercase and stable. Use it in every concept ID. `status` is `active` or `archived`. Dates use ISO `YYYY-MM-DD`. Legacy review_weight is ignored in the on-demand workflow.
+
+Reading defaults (also used when absent in older vaults):
+
+```yaml
+knowledge_organization: lecture-first
+concept_granularity: topic-cluster
+review_entry: wiki/index.md
+review_mode: on-demand
+auto_review_schedule: false
+```
+
+Lecture notes may add `reading_role: primary` or `reading_role: revision-record`. This is navigation metadata, independent of draft/approval status and source version.
 
 The profile may add:
 
@@ -47,7 +61,9 @@ lecture_no: 1
 lecture_date: 2026-08-25
 source_pdf: raw/lectures/L1.FA26.pdf
 source_hash: <sha256>
+reading_role: primary
 status: draft
+checked_at:
 concepts:
   - "[[Distributed System]]"
 ```
@@ -60,16 +76,16 @@ course: CS425
 concept_id: CS425/distributed-system
 aliases:
   - distributed systems
-mastery: 0
-review_stage: 0
-last_reviewed:
-next_review: 2026-08-26
+checked_at:
+return_to: []
 source_lectures:
   - "[[L01 - Welcome and Introduction]]"
 status: active
 ```
 
-Mastery is an integer from 0 through 4. Review stage is an integer from 0 through 4. Status is `active`, `draft`, or `superseded` as appropriate.
+Review dates and stages are retained only for backward compatibility; do not populate a future date or advance a timed ladder during normal ingestion or assessment.
+
+Legacy mastery/review_stage are optional integers from 0 through 4. New records do not need numeric assessment. Status is `active`, `draft`, or `superseded` as appropriate.
 
 ### Study session
 
@@ -78,12 +94,11 @@ type: study-session
 course:
   - CS425
 date: 2026-08-25
-mode: due-review
+mode: on-demand-review
 concepts:
   - CS425/distributed-system
-score: 0
-misconceptions: []
-next_actions: []
+source_lecture:
+evidence_summary:
 ```
 
 ### Deadline
@@ -120,3 +135,9 @@ verified_at: 2026-08-25
 只有来源明确给出 clock time 时才填写 `due_time`；填写后必须同时给出 `timezone`。动态日期标为 `verified` 时必须带 `verified_at`、`source_locator`，以及 `source_path` 或 `official_url` 至少一项。
 若来源给出 clock time 但未写 timezone，把原文放入 `due_time_text`，保持 `due_time` 为空，禁止自行补全时区。
 若官网只发布一个 section-dependent 日期范围，把原文放入 `date_window`，不要把窗口起点伪装成个人截止日期。
+
+## Progress and checked content
+
+Schema v2 requires learning/Progress.md (type: learning-progress, course, resume_link, updated_at). Its “待澄清问题” checklist holds current misconceptions with real session evidence; no entries means no recorded evidence, not confirmed mastery. A saved resume_link must point to a lecture/section.
+
+Active v2 lecture/concept/question notes require checked_at. Lectures and concepts cite local raw pages; question sets return to their source-checked lecture. References use return_to (a list of Wikilinks) to primary lecture sections. reading_role: revision-record stays secondary. Source version/release status and student progress are independent of content status.

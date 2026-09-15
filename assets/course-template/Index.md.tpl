@@ -7,18 +7,20 @@ language: "{{LANGUAGE}}"
 
 # {{COURSE_ID}} Wiki 总索引
 
+[[learning/Progress|继续上次位置与待澄清问题]]
+
 ## 课程入口
 
 - [[Home|课程 Home]]
 - [[Course|课程配置与 AI policy]]
 - [[views/Course.base|课程 Base]]
-- [[wiki/index|Wiki 概念索引]]
+- [[wiki/index|按讲学习与复习路线]]
 - [[wiki/log|Wiki 维护日志]]
 
 ## 知识区
 
-- `wiki/lectures/`：Lecture notes
-- `wiki/concepts/`：Concept pages
+- `wiki/lectures/`：每讲完整讲义；主阅读路线每讲只显示一个入口
+- `wiki/concepts/`：按主题组织的补充查阅页与来源与专题说明
 - `wiki/course-policies/`：课程政策与时间敏感信息
 - `wiki/pending/`：等待人工审核的草稿
 

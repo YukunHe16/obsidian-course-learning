@@ -22,7 +22,7 @@ language: "{{LANGUAGE}}"
 Codex 使用 `$course-learning`，Claude Code 使用 `/course-learning`，后面接同样的指令：
 
 - 资料摄取：`整理所有 active 课程 inbox 中的新资料`
-- 跨课程复习：`复习今天到期的内容`
+- 跨课程复习：`复习我指定的课程与主题`
 - 系统检查：`检查整个 semester`
 
 ## 语言

@@ -4,44 +4,24 @@ course: {{COURSE_ID}}
 term: {{TERM}}
 ---
 
-# {{COURSE_ID}} 学习主页
+# {{COURSE_ID}} · 学习入口
 
-完整导航：[[Index|课程 Wiki 总索引]]
+**[[wiki/index|按讲学习]]** · **[[learning/Progress|继续上次位置 / 待澄清问题]]**
 
-> [!info] 课程配置
-> [[Course|{{COURSE_ID}} - {{COURSE_TITLE}}]] · [[wiki/index|知识索引]] · [[raw/manifest|来源清单]] · [[wiki/log|维护日志]]
+## 主动自测
 
-## 今日课程截止
+打开一讲的自测部分，或对 agent 说：“考察这一讲，一次一题，先等我回答。”想复习时指定讲次或疑问即可。
 
-![[views/Course.base#今日截止]]
+## 查阅后怎么回来
 
-## 未来 14 天课程截止
+学习时固定主讲义标签页；⌘/Ctrl+点击链接在新标签页查阅。切回固定标签可继续原位置；普通同页跳转可用左上角后退。参考页顶部也有返回具体讲义章节的链接。
+
+## 课程截止日期
 
 ![[views/Course.base#未来 14 天截止日期]]
 
-## 待核验课程节点
+[[views/Course.base#全部截止日期|全部课程节点]] · [[views/Course.base#待核验截止日期|待核验日期]]
 
-![[views/Course.base#待核验截止日期]]
+## 维护与资料
 
-## 今日复习 (Spaced review)
-
-![[views/Course.base#今日复习]]
-
-## 薄弱概念 (Weak concepts)
-
-![[views/Course.base#薄弱概念]]
-
-## 待审核 (Pending review)
-
-![[views/Course.base#待审核]]
-
-## 最近学习 (Recent study)
-
-![[views/Course.base#最近学习]]
-
-## 探索方式
-
-- 打开全局 Graph 查看整门课的知识结构。
-- 打开概念的 local Graph 查看 lecture、prerequisite 与 misconception 关系。
-- 从 [[views/Course.base#全部截止日期|全部截止日期]] 检查作业、quiz、lab、exam 与 administrative milestones。
-- 让 agent 复习这门课：Codex `使用 $course-learning 复习这门课`，Claude Code `/course-learning 复习这门课`。
+[[Index|完整导航]] · [[Course|课程配置]] · [[views/Course.base#待审核|待核验资料]] · [[raw/manifest|Source manifest]] · [[wiki/log|维护日志]]

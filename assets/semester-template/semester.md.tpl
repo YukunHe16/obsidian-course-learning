@@ -3,18 +3,12 @@ type: semester
 term: {{TERM}}
 timezone: {{TIMEZONE}}
 language: {{LANGUAGE}}
+knowledge_organization: lecture-first
+concept_granularity: topic-cluster
+review_mode: on-demand
+auto_review_schedule: false
 status: active
-intake_time: "18:00"
-review_time: "20:00"
-review_every_days: 2
-weekly_day: Saturday
-weekly_time: "11:00"
 max_interleaved_courses: 3
-review_intervals:
-  - 1
-  - 3
-  - 7
-  - 14
 ---
 
 # {{TERM}} Learning System
@@ -25,4 +19,4 @@ This directory is the agent semester project (Codex or Claude Code). Open `Overv
 
 - Wiki prose follows `language`; the default is Chinese-primary prose with precise English technical terms and English citations.
 - Preserve raw sources and make durable claims traceable.
-- Scheduled and headless runs use mixed autonomy: derived state and drafts may update unattended; canonical promotion requires review.
+- Explicitly requested source maintenance may update derived summaries and source-checked ordinary notes; unresolved conflicts and policy changes require review. It never initiates learning sessions.

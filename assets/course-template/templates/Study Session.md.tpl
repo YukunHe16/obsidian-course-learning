@@ -3,17 +3,19 @@ type: study-session
 course:
   - {{COURSE_ID}}
 date:
-mode: due-review
-concepts: []
-score: 0
-misconceptions: []
-next_actions: []
+mode: on-demand-review
+source_lecture:
+evidence_summary:
 ---
 
-# 学习记录 (Study session)
+# 学习记录
 
-## 问题与掌握证据
+仅在真实互动后填写，不能为演示在个人 Vault 中创建虚构记录。
 
-## 纠错
+## 回答与帮助
 
-## 下一步
+简述实际推理以及是否使用提示。
+
+## 澄清
+
+记录具体解释和返回讲义章节的链接；当前未解决问题维护在 [[learning/Progress|学习位置与疑问]]。

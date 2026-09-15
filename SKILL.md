@@ -1,6 +1,6 @@
 ---
 name: course-learning
-description: Build and maintain reusable Obsidian course-learning vaults from lecture PDFs and other course materials. Use for initializing courses, ingesting sources, teaching concepts, Socratic quizzes, spaced review, semester dashboards, or vault health checks. Do not use to produce submit-ready work when a course forbids AI assistance.
+description: Build and maintain reusable Obsidian course-learning vaults from lecture PDFs and other course materials. Use for initializing courses, ingesting sources, teaching concepts, Socratic quizzes, on-demand review, semester dashboards, or vault health checks. Do not use to produce submit-ready work when a course forbids AI assistance.
 ---
 
 # Course Learning
@@ -23,16 +23,24 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 - **Ingest new material:** Read [ingest-workflow.md](references/ingest-workflow.md). For PDFs, also use the available PDF-specific skill and inspect every page visually as well as textually.
 - **Teach or answer:** Read [teaching-workflow.md](references/teaching-workflow.md).
 - **Quiz or review:** Read [assessment-rules.md](references/assessment-rules.md).
-- **Scheduled run:** Read [scheduled-workflows.md](references/scheduled-workflows.md) plus only the mode reference needed by that run.
+- **Explicitly requested material-maintenance automation:** Read [scheduled-workflows.md](references/scheduled-workflows.md) plus only the mode reference needed by that run.
 - **Lint or audit:** Read [vault-schema.md](references/vault-schema.md), then run `scripts/validate_vault.py` before semantic review.
-- **Rebuild Overview:** Read [vault-schema.md](references/vault-schema.md). Recompute only derived course-summary notes; never copy concept prose into Overview.
+- **Rebuild Overview:** Read [vault-schema.md](references/vault-schema.md). Run scripts/rebuild_overview.py --semester-root <root> [--course-id <id>]. It only updates derived summaries; never copy concept prose into Overview.
+
+## Human-readable organization
+
+For ingestion, reorganization, teaching, or review, read [reading-workflow.md](references/reading-workflow.md). Default to a lecture-first reading route and self-contained lecture explanations; concept cards serve lookup and assessment. Reuse primary lecture pages rather than generating a competing summary layer.
+
+## On-demand learning
+
+Teaching, quizzes, and review start only when the learner requests them. Do not create or recommend daily tests, recurring review, weekly checkpoints, study quotas, or automatic assessment sessions. Do not assign future review dates on ingest. Preserve old review metadata only for compatibility. Optional source maintenance must not initiate learning sessions.
 
 ## Invariants
 
 - Preserve every raw source byte-for-byte. Record a SHA-256 hash before marking a source ingested.
 - Cite course claims to a source file and page/section. Label external enrichment separately; it cannot silently override course material.
 - Unless `Course.md` explicitly overrides it, write Wiki prose primarily in Chinese, preserve English technical terms at first use and wherever precision matters, and format citation labels, source titles, and slide/page markers in English.
-- Write drafts and derived state automatically when authorized. Require user confirmation before promoting drafts, changing course policy, or overwriting human-authored canonical notes.
+- Write drafts and derived state automatically when authorized. Source-checked ordinary notes may become active with checked_at and exact source citations; only unresolved conflicts, course-policy changes, and destructive overwrites of human contributions require confirmation. Active means readable content, never learner mastery.
 - Course vaults own lecture, concept, question, and review state. Overview owns only regenerated summaries and cross-course session records.
 - Course vaults also own canonical deadline records under `learning/deadlines/`. Distinguish exact dates, recurring rules, unpublished dates, and section-dependent times; never infer a clock time from a date-only source. Overview may keep only derived counts and the next deadline.
 - Namespace stable identifiers with `course_id`, for example `CS425/asynchrony`.
@@ -48,4 +56,6 @@ Maintain a source-grounded learning system in which each course Obsidian vault i
 
 ## Completion standard
 
-Finish with the affected course, files created or updated, source coverage, pending approvals, next review date, and any validation warnings. Keep interactive quizzes one question at a time and do not reveal a rubric before the learner answers.
+Use learning/Progress.md for a learner-confirmed position and concise misconceptions, with real session evidence. New records need no numeric score or review schedule. Never fabricate progress from opening a file.
+
+Finish with the affected course, files created or updated, source coverage, pending approvals, and any validation warnings. Keep interactive quizzes one question at a time and do not reveal a rubric before the learner answers.

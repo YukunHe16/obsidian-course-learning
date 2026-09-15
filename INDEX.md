@@ -14,7 +14,7 @@
 - [资料摄取流程](references/ingest-workflow.md)
 - [教学流程](references/teaching-workflow.md)
 - [考察与复习规则](references/assessment-rules.md)
-- [Scheduled workflows](references/scheduled-workflows.md)
+- [按需资料维护](references/scheduled-workflows.md)
 - [Obsidian 安装与界面验证](references/obsidian-setup.md)
 
 ## 默认写作合同

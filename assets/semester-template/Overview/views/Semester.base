@@ -3,8 +3,6 @@ filters:
     - file.ext == "md"
     - note.type == "course-summary"
 properties:
-  due_count:
-    displayName: 到期复习
   upcoming_deadline_count:
     displayName: 未来 14 天截止
   overdue_deadline_count:
@@ -13,12 +11,10 @@ properties:
     displayName: 最近截止日期
   next_deadline_title:
     displayName: 最近截止事项
-  weak_count:
-    displayName: 薄弱
+  open_question_count:
+    displayName: 待澄清问题
   pending_count:
     displayName: 待审核
-  average_mastery:
-    displayName: 平均掌握度
   next_exam:
     displayName: 下次考试
   last_ingested:
@@ -33,14 +29,12 @@ views:
     order:
       - file.name
       - status
-      - due_count
       - upcoming_deadline_count
       - overdue_deadline_count
       - next_deadline
       - next_deadline_title
-      - weak_count
+      - open_question_count
       - pending_count
-      - average_mastery
       - next_exam
       - obsidian_uri
     sort:
@@ -50,29 +44,25 @@ views:
     name: 需要关注
     filters:
       or:
-        - note.due_count > 0
         - note.overdue_deadline_count > 0
         - and:
             - note.next_deadline.isType("date")
             - note.next_deadline <= today() + "7d"
-        - note.weak_count > 0
+        - note.open_question_count > 0
         - note.pending_count > 0
     order:
       - file.name
-      - due_count
       - upcoming_deadline_count
       - overdue_deadline_count
       - next_deadline
       - next_deadline_title
-      - weak_count
+      - open_question_count
       - pending_count
       - next_exam
     sort:
-      - property: due_count
-        direction: DESC
       - property: overdue_deadline_count
         direction: DESC
-      - property: weak_count
+      - property: open_question_count
         direction: DESC
   - type: table
     name: 近期课程截止
@@ -101,21 +91,6 @@ views:
     order:
       - file.name
       - next_exam
-      - average_mastery
-      - due_count
     sort:
       - property: next_exam
-        direction: ASC
-  - type: table
-    name: 复习负载
-    order:
-      - file.name
-      - due_count
-      - weak_count
-      - average_mastery
-      - last_studied
-    sort:
-      - property: due_count
-        direction: DESC
-      - property: average_mastery
         direction: ASC

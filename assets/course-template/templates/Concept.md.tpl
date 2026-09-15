@@ -3,15 +3,15 @@ type: concept
 course: {{COURSE_ID}}
 concept_id: {{COURSE_ID}}/
 aliases: []
-mastery: 0
-review_stage: 0
-last_reviewed:
-next_review:
+checked_at:
+return_to: []
 source_lectures: []
 status: draft
 ---
 
 # Concept 概念名
+
+填写返回主讲义及具体章节的链接；共享主题列出相关讲义，不记录全局来路。
 
 ## 直觉 (Mental model)
 

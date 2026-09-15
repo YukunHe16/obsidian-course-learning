@@ -3,19 +3,18 @@ type: course-summary
 course_id: {{COURSE_ID}}
 title: {{COURSE_TITLE}}
 term: {{TERM}}
+review_mode: on-demand
 status: active
-due_count: 0
 upcoming_deadline_count: 0
 overdue_deadline_count: 0
-weak_count: 0
+open_question_count: 0
+lecture_count: 0
 pending_count: 0
-average_mastery: 0
 next_deadline:
 next_deadline_title:
 next_exam:
 last_ingested:
 last_studied:
-last_score: 0
 generated_at:
 source_fingerprint:
 vault_path: {{COURSE_PATH}}

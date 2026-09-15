@@ -2,9 +2,11 @@
 
 ## Source order
 
-1. Read the relevant concept and lecture notes.
+1. Follow [reading-workflow.md](reading-workflow.md). Read the primary lecture and its place in the course reading route, then consult the relevant concept references.
 2. Verify load-bearing claims against the linked raw source.
 3. Use external sources only when the learner asks or when a clearly labeled enrichment materially improves understanding.
+
+Teach one connected section at a time unless a complete walkthrough is requested. Start by explaining the problem this section solves and its relationship to the previous section; do not read concept filenames as a lesson plan.
 
 ## Teaching shape
 
@@ -25,3 +27,7 @@ Before a substantial explanation, ask up to three short diagnostic questions unl
 ## Answers and persistence
 
 Cite the course source by file and page/section. If a conversation yields a durable comparison, misconception correction, or synthesis, propose writing it back to the appropriate concept page. Do not silently turn speculative discussion into canonical course knowledge.
+
+## Persistence and navigation
+
+During an explicit learning interaction, save the lecture/section position and meaningful misconceptions using assessment-rules.md. Keep feedback concise; do not infer mastery from reading. Keep the lecture pinned while opening references in other tabs, and reuse its tab when returning.

@@ -11,9 +11,9 @@ It turns lecture PDFs and other course sources into:
 - source-grounded lecture notes and concept pages;
 - Obsidian Bases, Graph, Backlinks, and dashboards;
 - source-grounded homework, quiz, lab, project, and exam deadline tracking;
-- Socratic quizzes and 1/3/7/14-day spaced review;
+- learner-initiated Socratic quizzes and on-demand review;
 - a semester Overview across independent course vaults;
-- optional scheduled workflows for intake, review, and weekly checks.
+- optional, explicitly requested source maintenance.
 
 The repository contains only the reusable framework. It does **not** contain course slides, answers, grades, or personal study data.
 
@@ -132,7 +132,7 @@ Use $course-learning to initialize CS425 in my FA26 semester.
 Open `<semester>/Overview` and each `<semester>/Courses/<COURSE_ID>` folder as separate Obsidian vaults.
 每个学期 project、Overview Vault 和课程 Vault 都必须有根级 `Index.md`；`Home.md` 展示当前状态，`Index.md` 负责长期稳定导航。
 
-## Daily Use
+## On-demand Use
 
 In Claude Code, from the semester root:
 
@@ -140,7 +140,7 @@ In Claude Code, from the semester root:
 /course-learning ingest the new PDF in this course inbox
 /course-learning teach Lecture 3 in Chinese with English technical terms
 /course-learning quiz me one question at a time
-/course-learning review everything due today
+/course-learning review the lecture or topic I choose
 /course-learning show all course deadlines in the next 14 days
 /course-learning validate the semester workspace
 ```
@@ -151,7 +151,7 @@ In Codex:
 Use $course-learning to ingest the new PDF in this course inbox.
 Use $course-learning to teach Lecture 3 in Chinese with English technical terms.
 Use $course-learning to quiz me one question at a time.
-Use $course-learning to review everything due today.
+Use $course-learning to review the lecture or topic I choose.
 Use $course-learning to show all course deadlines in the next 14 days.
 Use $course-learning to validate the semester workspace.
 ```
@@ -160,15 +160,25 @@ Use $course-learning to validate the semester workspace.
 
 The default writing contract is Chinese-primary prose, precise English technical terms, and English source citations. Edit `Course.md` to change it per course.
 
-## Scheduled Workflows
+## Learning on demand
 
-Ask the agent to create three semester-scoped scheduled runs:
+Open a lecture when you want to learn; ask for a quiz or review when useful. The system has no daily tests, recurring review, weekly checkpoints, or study quotas. Ingestion does not schedule future reviews.
 
-1. Daily material intake at 18:00.
-2. Adaptive cross-course review every two days at 20:00.
-3. Weekly Overview rebuild and checkpoint on Saturday at 11:00.
+Source intake can be automated only on explicit request. It organizes materials without initiating tests or learning reports. See [material maintenance](references/scheduled-workflows.md).
 
-Codex uses project-scoped Scheduled tasks. Claude Code uses its scheduled tasks where available, otherwise `cron` or `launchd` calling `claude -p` from the semester root. The prompts and mixed-autonomy boundaries are in [`references/scheduled-workflows.md`](references/scheduled-workflows.md). Keep reasoning effort at or below the level appropriate for your plan and usage limits.
+## Reading, return navigation and progress
+
+Pin the primary lecture tab and open references with Cmd/Ctrl-click. Switch back to keep the exact scroll position, or use Back after same-tab navigation. Concept/question pages also link to their primary lecture sections.
+
+The default layout is reading mode, hidden in-document Properties and Outline; Graph is optional. Progress stores only an explicitly selected learning position and evidence-backed questions. New records need no scores. Ordinary notes become readable after the agent checks sources; conflicts and policy changes are reviewed separately.
+
+Rebuild only derived summaries:
+
+~~~bash
+python3 scripts/rebuild_overview.py --semester-root <semester> --course-id <COURSE_ID>
+~~~
+
+Upgrading an existing vault: back up notes/settings, add Progress, set schema_version: 2 only after return links and checked-source metadata validate. Preserve old paths, raw hashes and human contributions; do not invent sessions from old numeric scores. Other existing courses need not be migrated.
 
 ## Validate
 
@@ -177,7 +187,7 @@ python3 $SKILL/scripts/validate_vault.py \
   --semester-root ~/Documents/Study/FA26
 ```
 
-The validator checks required structure, the agent contract files, source hashes referenced by lecture notes, concept IDs and mastery ranges, deadline IDs/dates/evidence/timezones, Wikilinks, and Overview/course consistency.
+The validator checks required structure, the agent contract files, source hashes referenced by lecture notes, concept IDs, optional legacy score ranges, reading/return links and evidence records, deadline IDs/dates/evidence/timezones, Wikilinks, and Overview/course consistency.
 
 ## Privacy and Academic Integrity
 

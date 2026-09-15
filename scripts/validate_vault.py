@@ -12,6 +12,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+from vault_model import frontmatter, scalar, sha256, links, resolve_link, progress_questions, course_fingerprint
 
 
 LINK_RE = re.compile(r"\[\[([^\]#|]+)")
@@ -55,55 +56,6 @@ DEADLINE_KINDS = {
     "recurring",
     "other",
 }
-
-
-def scalar(value: str) -> Any:
-    value = value.strip()
-    if value in {"", "null", "~"}:
-        return None
-    if value.lower() in {"true", "false"}:
-        return value.lower() == "true"
-    if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
-        return value[1:-1]
-    if re.fullmatch(r"-?\d+", value):
-        return int(value)
-    if re.fullmatch(r"-?\d+\.\d+", value):
-        return float(value)
-    if value == "[]":
-        return []
-    return value
-
-
-def frontmatter(path: Path) -> dict[str, Any]:
-    try:
-        lines = path.read_text(encoding="utf-8").splitlines()
-    except UnicodeDecodeError:
-        return {}
-    if not lines or lines[0].strip() != "---":
-        return {}
-    data: dict[str, Any] = {}
-    current: str | None = None
-    for line in lines[1:]:
-        if line.strip() == "---":
-            return data
-        if line.startswith("  - ") and current:
-            if not isinstance(data.get(current), list):
-                data[current] = []
-            data[current].append(scalar(line[4:]))
-            continue
-        match = re.match(r"^([A-Za-z0-9_-]+):\s*(.*)$", line)
-        if match:
-            current = match.group(1)
-            data[current] = scalar(match.group(2))
-    return data
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def add(issues: list[dict[str, str]], level: str, code: str, path: Path, message: str) -> None:
@@ -228,27 +180,90 @@ def validate_deadlines(
 
 
 def resolve_links(vault: Path, issues: list[dict[str, str]]) -> None:
-    notes = list(vault.rglob("*.md"))
-    by_stem: dict[str, list[Path]] = defaultdict(list)
-    relative_set = {str(note.relative_to(vault).with_suffix("")) for note in notes}
-    for note in notes:
-        by_stem[note.stem].append(note)
-    for note in notes:
-        if "templates" in note.relative_to(vault).parts:
+    for note in vault.rglob("*.md"):
+        if any(part in {"templates", "raw"} or part.startswith(".") for part in note.relative_to(vault).parts):
             continue
-        text = note.read_text(encoding="utf-8")
-        for target in LINK_RE.findall(text):
-            target = target.strip()
-            if not target or target.startswith("http"):
+        for target in links(note.read_text(encoding="utf-8")):
+            if target.startswith(("http:", "https:", "obsidian:")):
                 continue
-            normalized = target[:-3] if target.endswith(".md") else target
-            if "/" in normalized:
-                if normalized not in relative_set and not (vault / target).exists():
-                    add(issues, "warning", "broken-link", note, f"Unresolved Wikilink: {target}")
-            elif normalized not in by_stem:
-                add(issues, "warning", "broken-link", note, f"Unresolved Wikilink: {target}")
-            elif len(by_stem[normalized]) > 1:
-                add(issues, "warning", "ambiguous-link", note, f"Ambiguous Wikilink: {target}")
+            _, problem = resolve_link(vault, note, target)
+            if problem:
+                add(issues, "warning", problem, note, f"Unresolved reference: {target}")
+
+
+def validate_reading(vault: Path, issues: list[dict[str, str]]) -> None:
+    profile = frontmatter(vault / "Course.md")
+    version = profile.get("schema_version", 1)
+    if type(version) is not int or version not in {1, 2}:
+        add(issues, "error", "schema-version", vault / "Course.md", "Supported schema versions: 1, 2")
+        return
+    if version < 2:
+        return
+    progress = vault / "learning" / "Progress.md"
+    if not progress.exists():
+        add(issues, "error", "missing-progress", progress, "Schema v2 requires the progress page")
+    else:
+        data = frontmatter(progress)
+        if data.get("type") != "learning-progress" or data.get("course") not in {None, profile.get("course_id")}:
+            add(issues, "error", "progress-schema", progress, "Progress must belong to this course")
+        resume = data.get("resume_link")
+        if resume:
+            targets = links(str(resume))
+            if len(targets) != 1 or resolve_link(vault, progress, targets[0])[1]:
+                add(issues, "error", "progress-link", progress, "Resume link must resolve to one lecture/section")
+            else:
+                dest, _ = resolve_link(vault, progress, targets[0])
+                if not dest or frontmatter(dest).get("type") != "lecture":
+                    add(issues, "error", "progress-link", progress, "Resume target must be a lecture")
+            if not valid_iso_date(data.get("updated_at")):
+                add(issues, "error", "progress-date", progress, "A saved position requires updated_at")
+        for _, body in progress_questions(progress):
+            refs = links(body)
+            evidence = [resolve_link(vault, progress, ref)[0] for ref in refs]
+            if not any(p and p.suffix == ".md" and frontmatter(p).get("type") == "study-session" for p in evidence):
+                add(issues, "error", "progress-evidence", progress, "Each question needs session evidence")
+    route = vault / "wiki" / "index.md"
+    route_links = links(route.read_text()) if route.exists() else []
+    destinations = {dest for ref in route_links if (dest := resolve_link(vault, route, ref)[0])}
+    primaries = {}
+    for note in vault.rglob("*.md"):
+        if any(x in {"templates", "raw", ".obsidian"} for x in note.relative_to(vault).parts):
+            continue
+        data = frontmatter(note)
+        kind = data.get("type")
+        if kind == "lecture" and data.get("reading_role") == "primary":
+            key = (data.get("lecture_no"), data.get("lecture_part"))
+            if key in primaries:
+                add(issues, "error", "duplicate-primary", note, f"Also primary: {primaries[key]}")
+            primaries[key] = note
+            if note not in destinations:
+                add(issues, "error", "missing-reading-entry", note, "Primary lecture is missing from wiki/index")
+        if kind in {"lecture", "concept", "question-set"} and data.get("status") == "active":
+            if not valid_iso_date(data.get("checked_at")):
+                add(issues, "error", "checked-date", note, "Active v2 learning notes need checked_at")
+            raw_refs = [ref for ref in links(note.read_text()) if ref.startswith("raw/") and "#page=" in ref]
+            if kind in {"lecture", "concept"} and not any(resolve_link(vault, note, ref)[1] is None for ref in raw_refs):
+                add(issues, "error", "checked-source", note, "Checked note needs a valid local source/page citation")
+        if kind in {"concept", "question-set"} and data.get("status") != "superseded":
+            returns = data.get("return_to", [])
+            if isinstance(returns, str):
+                returns = [returns]
+            valid_return = False
+            for item in returns:
+                for ref in links(str(item)):
+                    dest, problem = resolve_link(vault, note, ref)
+                    if not problem and dest and frontmatter(dest).get("reading_role") == "primary":
+                        valid_return = True
+            if not valid_return:
+                add(issues, "error", "missing-return-link", note, "Reference notes need return_to pointing to a primary lecture")
+        if kind == "study-session":
+            if not valid_iso_date(data.get("date")):
+                add(issues, "error", "session-date", note, "Session needs an actual date")
+            if not data.get("evidence_summary"):
+                add(issues, "error", "session-evidence", note, "Session needs a brief actual interaction summary")
+            refs = links(str(data.get("source_lecture", "")))
+            if len(refs) != 1 or resolve_link(vault, note, refs[0])[1]:
+                add(issues, "error", "session-lecture", note, "Session lecture reference must resolve")
 
 
 def validate_course(
@@ -274,7 +289,7 @@ def validate_course(
 
     for note in (course_root / "wiki" / "concepts").glob("*.md"):
         data = frontmatter(note)
-        required = {"type", "course", "concept_id", "mastery", "review_stage", "status"}
+        required = {"type", "course", "concept_id", "status"}
         missing = sorted(required - data.keys())
         if missing:
             add(issues, "error", "concept-schema", note, f"Missing properties: {', '.join(missing)}")
@@ -288,9 +303,9 @@ def validate_course(
             add(issues, "error", "duplicate-concept-id", note, f"Also defined in {concept_ids[concept_id]}")
         else:
             concept_ids[concept_id] = note
-        if not isinstance(data.get("mastery"), int) or not 0 <= data["mastery"] <= 4:
+        if "mastery" in data and (type(data["mastery"]) is not int or not 0 <= data["mastery"] <= 4):
             add(issues, "error", "mastery-range", note, "mastery must be an integer from 0 to 4")
-        if not isinstance(data.get("review_stage"), int) or not 0 <= data["review_stage"] <= 4:
+        if "review_stage" in data and (type(data["review_stage"]) is not int or not 0 <= data["review_stage"] <= 4):
             add(issues, "error", "review-stage-range", note, "review_stage must be an integer from 0 to 4")
 
     for note in (course_root / "wiki" / "lectures").glob("*.md"):
@@ -307,6 +322,7 @@ def validate_course(
             elif isinstance(expected_hash, str) and expected_hash != sha256(source):
                 add(issues, "error", "source-hash", note, "Source hash does not match the immutable file")
 
+    validate_reading(course_root, issues)
     resolve_links(course_root, issues)
     return course_id
 
@@ -362,6 +378,15 @@ def main() -> int:
         add(issues, "error", "missing-summary", summaries_dir / f"{course_id}.md", "Course summary is missing")
     for course_id in sorted(summaries - course_ids):
         add(issues, "warning", "orphan-summary", summaries_dir / f"{course_id}.md", "No matching course vault")
+
+    if summaries_dir.is_dir():
+        for course_id in sorted(course_ids & summaries):
+            summary = summaries_dir / (course_id + ".md")
+            data = frontmatter(summary)
+            if data.get("source_fingerprint_method") == "sha256-relative-path-nul-bytes-nul-v2":
+                if data.get("source_fingerprint") != course_fingerprint(courses_dir / course_id):
+                    add(issues, "warning", "overview-drift", summary, "Rebuild derived summary after course changes")
+    resolve_links(root / "Overview", issues)
 
     errors = sum(issue["level"] == "error" for issue in issues)
     warnings = sum(issue["level"] == "warning" for issue in issues)

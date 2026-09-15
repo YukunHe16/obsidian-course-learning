@@ -73,19 +73,10 @@ Both agents may install from official sources only. Check `/Applications/Obsidia
 
 Under both agents, pause at any EULA, administrator credential, login, security-sensitive permission, or unexpected authorization screen. Never type the user's password.
 
-## Scheduling
+## Optional material maintenance
 
-The three semester workflows in [scheduled-workflows.md](scheduled-workflows.md) are agent-neutral prompts. Only the trigger differs.
-
-- **Codex:** project-scoped Scheduled tasks on the semester root. Keep reasoning effort at or below what the plan allows.
-- **Claude Code:** a scheduled-task feature when the build exposes one, otherwise headless mode from `cron` or `launchd`:
-
-  ```bash
-  cd <semester-root> && claude -p "Use the course-learning skill: <workflow prompt>"
-  ```
-
-  Headless runs inherit the same mixed-autonomy boundary: drafts and derived summaries may be written unattended; promotion, policy changes, and overwriting human edits still require confirmation. Grant only the permissions the workflow needs, and keep the semester timezone in the schedule.
+Learning is on demand. Do not schedule quizzes or periodic learning reports. Only explicit requests for source intake or source maintenance may use the current agent's available scheduling mechanism; no default cadence or setup-time scheduling prompt is required. Preserve paused status of existing tasks. Follow [scheduled-workflows.md](scheduled-workflows.md).
 
 ## What does not change
 
-Vault schema, deadline schema, ingestion, teaching, assessment, review intervals, validation, and the academic-integrity boundary are identical under both agents. If a workflow reference and this file disagree about anything other than the five items above, the workflow reference wins.
+Vault schema, deadline schema, ingestion, teaching, assessment, validation, and the academic-integrity boundary are identical under both agents. If a workflow reference and this file disagree about anything other than the five items above, the workflow reference wins.

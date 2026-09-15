@@ -5,12 +5,6 @@ filters:
     - not:
         - 'file.inFolder("templates")'
 properties:
-  mastery:
-    displayName: 掌握度
-  review_stage:
-    displayName: 复习阶段
-  next_review:
-    displayName: 下次复习
   lecture_no:
     displayName: 讲次
   date:
@@ -143,40 +137,6 @@ views:
       - property: note.due_date
         direction: ASC
       - property: file.name
-        direction: ASC
-  - type: table
-    name: 今日复习
-    filters:
-      and:
-        - 'note.type == "concept"'
-        - 'note.status == "active"'
-        - 'note.next_review.isType("date")'
-        - 'note.next_review <= today()'
-    order:
-      - file.name
-      - note.mastery
-      - note.review_stage
-      - note.next_review
-    sort:
-      - property: note.next_review
-        direction: ASC
-      - property: note.mastery
-        direction: ASC
-  - type: table
-    name: 薄弱概念
-    filters:
-      and:
-        - 'note.type == "concept"'
-        - 'note.status == "active"'
-        - 'note.mastery <= 2'
-    order:
-      - file.name
-      - note.mastery
-      - note.next_review
-    sort:
-      - property: note.mastery
-        direction: ASC
-      - property: note.next_review
         direction: ASC
   - type: table
     name: 待审核

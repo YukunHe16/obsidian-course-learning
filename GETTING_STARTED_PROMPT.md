@@ -14,7 +14,9 @@
 - 创建一个 semester-level agent project；
 - 每门课使用独立 Obsidian Vault，另有独立 Overview Vault；
 - 后续能把 lecture PDFs 整理成中文为主、English technical terms、English citations 的 Wiki；
-- 支持 source-grounded deadline tracking、Socratic quiz、1/3/7/14-day spaced review、Obsidian Bases/Graph，以及可选的定时任务。
+- 默认正文阅读模式、隐藏正文 Properties 与重复文件标题、使用 Outline；主讲义固定标签页，查阅打开新标签，参考页有返回讲义章节的链接；
+- 使用 Progress 记录明确学习互动或用户指定的位置与简短错因，不自动评分；普通笔记经 Agent 对照来源核验后可阅读，争议与政策变更再确认；
+- 支持 source-grounded deadline tracking、按需讲解、自测与复习、Obsidian Bases/Graph；不安排固定学习节奏。
 
 请按下面流程执行：
 
@@ -54,11 +56,11 @@
     - `整理 inbox 中的新课件`
     - `讲解 Lecture 1`
     - `逐题考我`
-    - `复习今天到期的内容`
+    - `复习我指定的讲次或主题`
     - `查看未来 14 天的作业、quiz、lab、project 和 exam deadlines`
     - `检查整个 semester`
 12. 不要把我的 raw course PDFs、assignment files、grades、账号信息或 personal study data 提交到这个 framework repository。
-13. 最后询问我是否创建三项 semester-scoped 定时任务：daily intake、every-two-day review、weekly checkpoint。只有我确认后才创建；Codex 用 project-scoped Scheduled，Claude Code 用其 scheduled task 功能或 `cron`/`launchd` 调用 `claude -p`。使用当前账户支持的模型；reasoning effort 不高于 high。
+13. 学习和复习仅由用户主动发起。不要创建或主动推荐每日测试、周期复习、每周回顾、自动考察和学习配额；只有明确要求时才设置资料摄取或来源维护自动化。
 
 完成标准：Skill 能被新 task/session 自动发现；Obsidian 已从官方来源安装或已确认存在；semester 与至少一门课程创建成功；validator 为 0 errors；Overview 与 course Vault 都已在 Obsidian 中独立打开，并且 Home、Base 和 Graph 都被你真实观察过（如果做不到，明确说明哪一部分没验证）；没有上传任何真实课程资料。
 ```
@@ -88,5 +90,5 @@
 ```
 
 ```text
-开始一次 30 分钟复习。一次只问一题，不要提前展示答案；根据我的回答更新 mastery 和 1/3/7/14-day review schedule。
+开始一次 30 分钟复习。一次只问一题，不要提前展示答案；根据我的回答解释错因并保存简短学习记录，不安排未来定期任务。
 ```

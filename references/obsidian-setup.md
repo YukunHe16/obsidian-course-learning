@@ -58,3 +58,7 @@ obsidian vault=<VAULT> dev:screenshot path=/tmp/<VAULT>-home.png   # then read t
 ```
 
 Completion requires both structural validation from `validate_vault.py` and visible Obsidian verification. Report which vaults and pages were actually opened, how each one was observed, any UI step that remains, and whether user confirmation was required.
+
+## Reading-first layout and return test
+
+Enable Outline. In course settings use defaultViewMode=preview, propertiesInDocument=hidden and showInlineTitle=false. Retain Properties in its core sidebar and Graph as on-demand tools. Pin the primary lecture tab; Cmd/Ctrl-click references or use a new tab via CLI. Reuse the pinned tab to preserve scroll; test Back for same-tab navigation and top-of-note return links for section navigation. Verify a real lecture → concept/PDF → lecture round trip in the live app, not just generated configuration.
